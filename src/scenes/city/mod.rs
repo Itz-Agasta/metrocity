@@ -70,6 +70,7 @@ impl CityScene {
             logo_asset: DistroLogo {
                 grid: vec![vec![None; 32]; 20],
                 is_compact: false,
+                display_name: String::new(),
             },
             simulation_config: crate::config::SimulationConfig::default(),
             monolith_sign_text: String::from("METROCITY CORP"),
@@ -102,15 +103,11 @@ impl CityScene {
         self.rebuild_buildings_if_needed(area);
 
         let mut rng = thread_rng();
-        let cpu = 0.0; // dummy — no sysinfo
-        let disk = 0.0;
 
         vehicles::update_vehicles(
             &mut self.vehicles,
             &mut self.chase_cooldown,
             self.frame_count,
-            cpu,
-            disk,
             area,
             &self.theme,
             &self.simulation_config,
@@ -138,13 +135,16 @@ impl CityScene {
         );
     }
 
-    // ── Render methods (ported from MetropolisCity) ──────────────────────
+    // Render methods
 
     fn render_background(&self, area: Rect, buf: &mut Buffer) {
         let bg_color = self.theme.building_base_colors[0];
         for y in area.top()..area.bottom() {
             for x in area.left()..area.right() {
-                buf.cell_mut((x, y)).unwrap().set_symbol(" ").set_bg(bg_color);
+                buf.cell_mut((x, y))
+                    .unwrap()
+                    .set_symbol(" ")
+                    .set_bg(bg_color);
             }
         }
     }
@@ -227,8 +227,7 @@ impl CityScene {
 
                         // Logo on main monolith (building index 1)
                         if i == 1 && y_rel < 20 && x_rel < 32 {
-                            if let Some(pixel) = &logo_asset.grid[y_rel as usize][x_rel as usize]
-                            {
+                            if let Some(pixel) = &logo_asset.grid[y_rel as usize][x_rel as usize] {
                                 let logo_bg = if pixel.bg == Color::Reset {
                                     b_base_color
                                 } else {
@@ -263,11 +262,13 @@ impl CityScene {
 
                             // Windows
                             let has_sign = i % 2 == 1 && bh > 12;
-                            let is_win_row = y_rel > 2
-                                && y_rel < bh.saturating_sub(4)
-                                && y_rel % 3 == 0;
-                            let x_clearance =
-                                if has_sign { bw.saturating_sub(2) } else { bw.saturating_sub(1) };
+                            let is_win_row =
+                                y_rel > 2 && y_rel < bh.saturating_sub(4) && y_rel % 3 == 0;
+                            let x_clearance = if has_sign {
+                                bw.saturating_sub(2)
+                            } else {
+                                bw.saturating_sub(1)
+                            };
 
                             // Check if near logo
                             let mut near_logo = false;
@@ -306,7 +307,10 @@ impl CityScene {
                                         .wrapping_add(dy as u64)
                                         .wrapping_add(self.window_seed);
                                     let mut wr = StdRng::seed_from_u64(seed);
-                                    fg = if wr.gen_bool(0.25) {
+
+                                    // TODO: once set at scene creation a lit window stays lit forever
+                                    // make them dynamically turn on/off
+                                    fg = if wr.gen_bool(0.40) {
                                         self.theme.window_lit
                                     } else {
                                         self.theme.window_unlit
@@ -331,9 +335,7 @@ impl CityScene {
                                         fg = self.theme.window_unlit;
                                     }
                                 }
-                                if x_rel == door_x + 2
-                                    && y_rel == bh.saturating_sub(2)
-                                {
+                                if x_rel == door_x + 2 && y_rel == bh.saturating_sub(2) {
                                     symbol = "·";
                                     fg = if self.frame_count % 20 < 10 {
                                         Color::Red
@@ -367,8 +369,8 @@ impl CityScene {
                         "NETRUNNER",
                         "GRID_RUN",
                     ];
-                    let idx = ((i / 2).wrapping_add(self.frame_count as usize / 120))
-                        % phrases.len();
+                    let idx =
+                        ((i / 2).wrapping_add(self.frame_count as usize / 120)) % phrases.len();
                     sign_text = phrases[idx];
                     sign_color = match (i / 2) % 3 {
                         0 => self.theme.neon_sub1,
@@ -395,13 +397,7 @@ impl CityScene {
                     if ant_y < buf.area.height {
                         match i % 3 {
                             0 => {
-                                safe_set_symbol(
-                                    buf,
-                                    ant_x,
-                                    ant_y,
-                                    "┷",
-                                    Color::Rgb(60, 60, 80),
-                                );
+                                safe_set_symbol(buf, ant_x, ant_y, "┷", Color::Rgb(60, 60, 80));
                                 if ant_y > area.y {
                                     safe_set_symbol(
                                         buf,
@@ -410,36 +406,21 @@ impl CityScene {
                                         "┃",
                                         Color::Rgb(50, 50, 70),
                                     );
-                                    let beacon_color =
-                                        if self.frame_count % 30 < 15 {
-                                            Color::Red
-                                        } else {
-                                            Color::Rgb(60, 0, 0)
-                                        };
+                                    let beacon_color = if self.frame_count % 30 < 15 {
+                                        Color::Red
+                                    } else {
+                                        Color::Rgb(60, 0, 0)
+                                    };
                                     if ant_y > area.y + 1 {
-                                        safe_set_symbol(
-                                            buf, ant_x, ant_y - 2, "*", beacon_color,
-                                        );
+                                        safe_set_symbol(buf, ant_x, ant_y - 2, "*", beacon_color);
                                     }
                                 }
                             }
                             1 => {
-                                safe_set_symbol(
-                                    buf,
-                                    ant_x,
-                                    ant_y,
-                                    "◆",
-                                    Color::Rgb(100, 100, 120),
-                                );
+                                safe_set_symbol(buf, ant_x, ant_y, "◆", Color::Rgb(100, 100, 120));
                             }
                             _ => {
-                                safe_set_symbol(
-                                    buf,
-                                    ant_x,
-                                    ant_y,
-                                    "▝",
-                                    Color::Rgb(40, 40, 50),
-                                );
+                                safe_set_symbol(buf, ant_x, ant_y, "▝", Color::Rgb(40, 40, 50));
                             }
                         }
                     }
@@ -450,10 +431,7 @@ impl CityScene {
 
     fn render_street_lamps(&self, area: Rect, buf: &mut Buffer) {
         for x_lamp in (5..area.width).step_by(10) {
-            let inside = self
-                .buildings_cache
-                .iter()
-                .any(|b| b.contains_x(x_lamp));
+            let inside = self.buildings_cache.iter().any(|b| b.contains_x(x_lamp));
             if !inside {
                 let lx = area.x + x_lamp;
                 let ground_y = area.y + area.height - 3;
@@ -463,20 +441,8 @@ impl CityScene {
                     self.theme.street_lamp_lit
                 };
                 safe_set_symbol(buf, lx, ground_y, "┃", self.theme.ground);
-                safe_set_symbol(
-                    buf,
-                    lx,
-                    ground_y.saturating_sub(1),
-                    "┃",
-                    self.theme.ground,
-                );
-                safe_set_symbol(
-                    buf,
-                    lx,
-                    ground_y.saturating_sub(2),
-                    "┃",
-                    self.theme.ground,
-                );
+                safe_set_symbol(buf, lx, ground_y.saturating_sub(1), "┃", self.theme.ground);
+                safe_set_symbol(buf, lx, ground_y.saturating_sub(2), "┃", self.theme.ground);
                 safe_set_string(
                     buf,
                     lx.saturating_sub(1),
@@ -542,10 +508,7 @@ impl CityScene {
 
             let now = chrono_now();
             let time_str = format!("{:02}:{:02}:{:02}", now.hour, now.minute, now.second);
-            let date_str = format!(
-                "{:02}/{:02}/{:04}",
-                now.month, now.day, now.year
-            );
+            let date_str = format!("{:02}/{:02}/{:04}", now.month, now.day, now.year);
 
             let width: u16 = 26;
             let height: u16 = 5;
@@ -557,40 +520,16 @@ impl CityScene {
             } else {
                 Color::Rgb(85, 85, 85)
             };
-            safe_set_symbol(
-                buf,
-                mb_x + 4,
-                mb_y.saturating_sub(1),
-                "╨",
-                strut_color,
-            );
-            safe_set_symbol(
-                buf,
-                mb_x + 20,
-                mb_y.saturating_sub(1),
-                "╨",
-                strut_color,
-            );
+            safe_set_symbol(buf, mb_x + 4, mb_y.saturating_sub(1), "╨", strut_color);
+            safe_set_symbol(buf, mb_x + 20, mb_y.saturating_sub(1), "╨", strut_color);
 
             let board_y = mb_y.saturating_sub(6);
 
             // Board border
             for dx in mb_x..mb_x + width {
-                safe_set_symbol(
-                    buf,
-                    dx,
-                    board_y + height - 1,
-                    "─",
-                    Color::Rgb(85, 85, 85),
-                );
+                safe_set_symbol(buf, dx, board_y + height - 1, "─", Color::Rgb(85, 85, 85));
             }
-            safe_set_symbol(
-                buf,
-                mb_x,
-                board_y,
-                "⌜",
-                Color::Rgb(170, 170, 170),
-            );
+            safe_set_symbol(buf, mb_x, board_y, "⌜", Color::Rgb(170, 170, 170));
             safe_set_symbol(
                 buf,
                 mb_x + width - 1,
@@ -662,11 +601,15 @@ impl CityScene {
             let py_l = area.y + ground_y;
             let py_h = py_l.saturating_sub(1);
             if px < area.x + area.width && py_l < area.y + area.height {
-                let building_bg = self.buildings_cache.iter().find(|b| {
-                    let bx = area.x + b.x_offset;
-                    let top_y = ground_y.saturating_sub(b.height);
-                    px >= bx && px < bx + b.width && py_l >= area.y + top_y
-                }).map(|_| b_base_color);
+                let building_bg = self
+                    .buildings_cache
+                    .iter()
+                    .find(|b| {
+                        let bx = area.x + b.x_offset;
+                        let top_y = ground_y.saturating_sub(b.height);
+                        px >= bx && px < bx + b.width && py_l >= area.y + top_y
+                    })
+                    .map(|_| b_base_color);
 
                 let gait = if p.is_entering && p.entry_pause_timer > 0 {
                     1
@@ -710,10 +653,7 @@ impl CityScene {
             }
 
             let (body, tail_color) = match v.v_type {
-                VehicleType::Spinner => (
-                    vec!['◢', '■', '◣'],
-                    Some(self.theme.police_red),
-                ),
+                VehicleType::Spinner => (vec!['◢', '■', '◣'], Some(self.theme.police_red)),
                 VehicleType::Shuttle => {
                     let mut b = vec!['▓'];
                     for _ in 0..v.length.saturating_sub(2) {
@@ -771,7 +711,11 @@ impl CityScene {
                             sx,
                             sy,
                             '═',
-                            if is_on { base_color } else { Color::Rgb(40, 40, 60) },
+                            if is_on {
+                                base_color
+                            } else {
+                                Color::Rgb(40, 40, 60)
+                            },
                             l_bg,
                         );
                     }
@@ -794,12 +738,12 @@ impl CityScene {
                             safe_set_char_with_bg(buf, tx, vy, ':', t_color, t_bg);
                             if tx >= area.x + 1 {
                                 let s2 = safe_get_symbol(buf, tx.saturating_sub(1), vy);
-                                let t2_bg =
-                                    if s2 == "█" || s2 == "▓" || s2 == "▆" || s2 == "▄" {
-                                        safe_get_fg(buf, tx.saturating_sub(1), vy)
-                                    } else {
-                                        safe_get_bg(buf, tx.saturating_sub(1), vy)
-                                    };
+                                let t2_bg = if s2 == "█" || s2 == "▓" || s2 == "▆" || s2 == "▄"
+                                {
+                                    safe_get_fg(buf, tx.saturating_sub(1), vy)
+                                } else {
+                                    safe_get_bg(buf, tx.saturating_sub(1), vy)
+                                };
                                 safe_set_char_with_bg(
                                     buf,
                                     tx.saturating_sub(1),
@@ -818,7 +762,8 @@ impl CityScene {
                                     if t2x < area.x + area.width {
                                         let s2 = safe_get_symbol(buf, t2x, vy);
                                         let t2_bg =
-                                            if s2 == "█" || s2 == "▓" || s2 == "▆" || s2 == "▄" {
+                                            if s2 == "█" || s2 == "▓" || s2 == "▆" || s2 == "▄"
+                                            {
                                                 safe_get_fg(buf, t2x, vy)
                                             } else {
                                                 safe_get_bg(buf, t2x, vy)
@@ -889,6 +834,7 @@ impl Scene for CityScene {
         if self.distro.is_empty() {
             self.distro = detect_distro();
             self.logo_asset = get_logo(&self.distro);
+            self.monolith_sign_text = format!("{} CORP", self.logo_asset.display_name);
         }
 
         // Rebuild buildings for new dimensions
@@ -975,7 +921,7 @@ impl Widget for &CityScene {
     }
 }
 
-// ── Minimal time helper (no chrono dependency) ──────────────────────────
+// Minimal time helper (no chrono dependency)
 
 struct SimpleTime {
     hour: u32,
@@ -1012,7 +958,16 @@ fn chrono_now() -> SimpleTime {
     let month_days: [u32; 12] = [
         31,
         if is_leap(y) { 29 } else { 28 },
-        31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31,
     ];
     let mut m = 1u32;
     for &md in &month_days {

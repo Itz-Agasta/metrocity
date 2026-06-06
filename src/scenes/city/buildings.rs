@@ -1,6 +1,6 @@
+use super::utils::*;
 use ratatui::buffer::Buffer;
 use ratatui::style::Color;
-use super::utils::*;
 
 #[derive(Debug, Clone, Copy)]
 pub struct BuildingInfo {
@@ -30,7 +30,10 @@ pub fn compute_buildings(area_width: u16, area_height: u16) -> Vec<BuildingInfo>
     let ground_y = area_height.saturating_sub(3);
 
     for (i, x_base) in (0..area_width).step_by(20).enumerate() {
-        if skip_next { skip_next = false; continue; }
+        if skip_next {
+            skip_next = false;
+            continue;
+        }
 
         let mut bw = 8 + (x_base % 7) as u16;
         let mut bh = (area_height / 3) + (x_base % 11) as u16;
@@ -67,20 +70,21 @@ pub fn compute_buildings(area_width: u16, area_height: u16) -> Vec<BuildingInfo>
     buildings
 }
 
-
 pub fn draw_neon_sign(buf: &mut Buffer, x: u16, y: u16, text: &str, color: Color, frame: u64) {
-    if x >= buf.area.width { return; }
+    if x >= buf.area.width {
+        return;
+    }
     for (i, ch) in text.chars().enumerate() {
         let dy = y.saturating_add(i as u16);
         if dy < buf.area.height {
             let seed = (frame / 2).wrapping_add(i as u64).wrapping_add(x as u64);
             let noise = seed.wrapping_mul(11400714819323198485);
-            let final_color = if (noise % 100) < 95 { 
-                color 
-            } else { 
-                Color::Rgb(30, 30, 45) 
+            let final_color = if (noise % 100) < 95 {
+                color
+            } else {
+                Color::Rgb(30, 30, 45)
             };
-            
+
             safe_set_char(buf, x, dy, ch, final_color);
         }
     }
