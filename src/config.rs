@@ -14,7 +14,7 @@ pub struct Appearance {
 impl Default for Appearance {
     fn default() -> Self {
         Self {
-            theme: "cyberpunk".to_string(),
+            theme: "default".to_string(),
             weather: "rain".to_string(),
             solid_background_color: String::new(),
         }
@@ -26,15 +26,16 @@ impl Default for Appearance {
 #[serde(default)]
 pub struct EngineConfig {
     pub fps: u32,
+    pub scene: String,
     pub cycle_seconds: u32,
     pub shuffle: bool,
     pub oled_shift: bool,
 }
-
 impl Default for EngineConfig {
     fn default() -> Self {
         Self {
             fps: 30,
+            scene: String::from("city"),
             cycle_seconds: 0,
             shuffle: false,
             oled_shift: false,

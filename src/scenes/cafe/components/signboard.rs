@@ -28,6 +28,26 @@ pub fn draw(buf: &mut Buffer, x0: u16, y0: u16, area_w: u16, floor_y: u16) {
     draw_leg(buf, base_sx, sy, FRAME_DARK, 0, 1);
     draw_leg(buf, base_sx, sy, FRAME, 0, 15);
     draw_leg(buf, base_sx, sy, FRAME_DARK, 0, 16);
+
+    // Free Meow-fi logo
+    draw_logo(buf, base_sx, sy, 16, 2);
+}
+
+/// Draws "FREE MEOW-FI" text inside the sign body.
+fn draw_logo(buf: &mut Buffer, sx: u16, sy: u16, w: u16, x_off: u16) {
+    let text_color = Color::Rgb(220, 180, 120);
+    let sign_sx = sx + x_off;
+    let style = Style::default().fg(text_color).bg(BG);
+
+    // "FREE" centered, 2 rows down from top of sign
+    let free_x = sign_sx + (w - 4) / 2;
+    buf.set_string(free_x, sy + 3, "FREE", style);
+
+    // "MEOW-FI" centered, 5 rows down
+    let meow_x = sign_sx + (w - 7) / 2;
+    buf.set_string(meow_x, sy + 5, "MEOW-FI", style);
+
+    // Paw below
 }
 
 fn draw_sign(
