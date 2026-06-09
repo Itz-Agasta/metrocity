@@ -1,8 +1,14 @@
-# Metrocity
+<p align="center">
+  <h1 align="center">Metrocity</h1>
 
-<img width="1280" height="720" alt="metrocity2" src="https://github.com/user-attachments/assets/962a3763-78d3-408f-bc1b-1807075f804e" />
+  <p align="center">
+    Terminal idle eye candy for people who treat their terminal like a desktop wallpaper.
+  </p>
+</p>
 
-Terminal idle eye candy for people who treat their terminal like a desktop wallpaper.
+
+
+https://github.com/user-attachments/assets/cf53dfcd-e152-4222-a36a-8b0e2b7da1d5
 
 Activates when your shell is idle, takes over the terminal with an animated scene, and exits instantly on any keypress. Flashes your distro logo, Goes hard in your Hyprland setup.
 
