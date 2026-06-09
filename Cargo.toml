@@ -1,0 +1,27 @@
+[package]
+name = "metrocity"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.75.0"
+description = "A terminal screensaver — cyberpunk skyline that activates on idle"
+license = "MIT"
+
+[[bin]]
+name = "metrocity"
+path = "src/main.rs"
+
+[dependencies]
+ratatui = "0.29"
+crossterm = "0.28"
+rand = "0.8"
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1.0", features = ["derive"] }
+toml = "0.8"
+directories = "5.0"
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"
