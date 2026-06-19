@@ -51,6 +51,9 @@ pub fn render(area: Rect, buf: &mut Buffer) {
     draw_counter(x0, y0, w, counter_y, floor_y, buf);
     draw_floor(x0, y0, w, h, floor_y, buf);
 
+    // Components
+    super::components::signboard::draw(buf, x0, y0, w, floor_y);
+
     // TODO: draw window (right side, night sky + rain + city silhouette)
     // TODO: draw shelves on left wall (horizontal lines with mugs)
     // TODO: draw menu board (center, framed "MENU" + items + paw print)
