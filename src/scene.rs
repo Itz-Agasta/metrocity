@@ -1,3 +1,5 @@
+use std::io::{self, Write};
+
 use ratatui::buffer::Buffer;
 use ratatui::layout::Rect;
 
@@ -6,7 +8,7 @@ use crate::theme::Theme;
 /// A screensaver scene. The engine calls: init → (update → draw)* → resize → …
 pub trait Scene {
     /// Human-readable name for CLI selection.
-    #[allow(dead_code)] // TODO: used by scene cycling (v2) and `--list` output
+    #[allow(dead_code)]
     fn name(&self) -> &str;
 
     /// Initialize or reinitialize with new terminal dimensions and theme.
@@ -17,4 +19,14 @@ pub trait Scene {
 
     /// Render the current state into the ratatui buffer.
     fn draw(&self, area: Rect, buf: &mut Buffer);
+
+    /// Emit raw terminal output (e.g. Kitty graphics) after each ratatui draw.
+    fn post_draw(&mut self, _out: &mut dyn Write) -> io::Result<()> {
+        Ok(())
+    }
+
+    /// Emit raw terminal cleanup (e.g. delete Kitty images) before exit.
+    fn cleanup(&mut self, _out: &mut dyn Write) -> io::Result<()> {
+        Ok(())
+    }
 }

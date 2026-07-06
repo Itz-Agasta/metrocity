@@ -1,6 +1,8 @@
 mod config;
 mod engine;
+mod kitty;
 mod scene;
+mod sprite;
 mod scenes;
 mod shell;
 mod theme;
@@ -41,18 +43,11 @@ struct Cli {
 #[derive(Subcommand)]
 enum Commands {
     /// Print shell integration snippet
-    ShellInit {
-        /// Shell to generate for (zsh, bash)
-        shell: String,
-    },
+    ShellInit { shell: String },
     /// List available scenes or themes
-    List {
-        /// What to list (scenes, themes)
-        target: String,
-    },
+    List { target: String },
     /// Show or write configuration
     Config {
-        /// Write default config file
         #[arg(long)]
         init: bool,
     },
@@ -106,7 +101,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             );
         }
         None => {
-            // No subcommand — start the screensaver
             run_screensaver(&cli)?;
         }
     }
@@ -126,30 +120,34 @@ fn run_screensaver(cli: &Cli) -> Result<(), Box<dyn std::error::Error>> {
     }
     config.engine.fps = cli.fps;
 
-    // TODO: pass resolved theme to engine
+    let theme = crate::theme::Theme::from_str(&config.appearance.theme);
 
-    // Resolve weather
-    let weather = match config.appearance.weather.to_lowercase().as_str() {
-        "rain" => scenes::city::weather::Weather::Rain,
-        "snow" => scenes::city::weather::Weather::Snow,
-        _ => scenes::city::weather::Weather::Clear,
+    // Resolve scene from --scene flag or config
+    let scene_name = cli.scene.as_deref().unwrap_or(&config.engine.scene);
+
+    let mut scene: Box<dyn scene::Scene> = match scene_name {
+        "cafe" => Box::new(scenes::cafe::CafeScene::new()),
+        _ => {
+            let weather = match config.appearance.weather.to_lowercase().as_str() {
+                "rain" => scenes::city::weather::Weather::Rain,
+                "snow" => scenes::city::weather::Weather::Snow,
+                _ => scenes::city::weather::Weather::Clear,
+            };
+            let mut city = scenes::city::CityScene::new();
+            city.weather = weather;
+            city.simulation_config = config.simulation.clone();
+            city.monolith_sign_text = if config.monolith.custom_text.is_empty() {
+                let distro = city.distro.to_uppercase();
+                format!("{} CORP", distro)
+            } else {
+                config.monolith.custom_text.clone()
+            };
+            Box::new(city)
+        }
     };
 
-    // Build and configure the city scene
-    let mut city = scenes::city::CityScene::new();
-    city.weather = weather;
-    city.simulation_config = config.simulation.clone();
-    city.monolith_sign_text = if config.monolith.custom_text.is_empty() {
-        let distro = city.distro.to_uppercase();
-        format!("{} CORP", distro)
-    } else {
-        config.monolith.custom_text.clone()
-    };
-    let mut scene: Box<dyn scene::Scene> = Box::new(city);
-
-    // Run engine
     let mut engine = engine::Engine::new(&config);
-    engine.run(scene.as_mut())?;
+    engine.run(scene.as_mut(), &theme)?;
 
     Ok(())
 }
