@@ -373,7 +373,6 @@ impl Theme {
             pedestrian: Color::Rgb(0, 180, 0),
             ground: Color::Rgb(0, 50, 0),
             logo_override: Some(Color::Rgb(0, 255, 0)),
-            ..Self::default_theme()
         }
     }
 
@@ -443,7 +442,6 @@ impl Theme {
             pedestrian: Color::Rgb(170, 170, 170),
             ground: Color::Rgb(68, 71, 90),
             logo_override: None,
-            ..Self::default_theme()
         }
     }
 
@@ -485,7 +483,6 @@ impl Theme {
             pedestrian: Color::Rgb(15, 15, 15), // Pitch black silhouettes
             ground: Color::Rgb(150, 150, 150),
             logo_override: Some(Color::Rgb(255, 0, 0)),
-            ..Self::default_theme()
         }
     }
 

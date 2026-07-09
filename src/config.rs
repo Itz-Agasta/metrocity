@@ -69,20 +69,11 @@ impl Default for SimulationConfig {
 // Monolith config
 #[derive(Debug, Deserialize, Serialize, Clone)]
 #[serde(default)]
+#[derive(Default)]
 pub struct MonolithConfig {
     pub custom_text: String,
     pub custom_color: String,
     pub override_distro: String,
-}
-
-impl Default for MonolithConfig {
-    fn default() -> Self {
-        Self {
-            custom_text: String::new(),
-            custom_color: String::new(),
-            override_distro: String::new(),
-        }
-    }
 }
 
 // Neon text config

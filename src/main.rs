@@ -2,9 +2,9 @@ mod config;
 mod engine;
 mod kitty;
 mod scene;
-mod sprite;
 mod scenes;
 mod shell;
+mod sprite;
 mod theme;
 
 use clap::{Parser, Subcommand};

@@ -27,13 +27,22 @@ pub fn supported() -> bool {
 }
 
 /// Transmit RGBA pixel data as image `id` (a=t: transmit only, no display).
-pub fn transmit(out: &mut dyn Write, id: u32, width: u16, height: u16, rgba: &[u8]) -> io::Result<()> {
+pub fn transmit(
+    out: &mut dyn Write,
+    id: u32,
+    width: u16,
+    height: u16,
+    rgba: &[u8],
+) -> io::Result<()> {
     let payload = STANDARD.encode(rgba);
     let chunks: Vec<&[u8]> = payload.as_bytes().chunks(CHUNK_SIZE).collect();
     for (i, chunk) in chunks.iter().enumerate() {
         let more = usize::from(i + 1 < chunks.len());
         if i == 0 {
-            write!(out, "\x1b_Ga=t,q=2,f=32,i={id},s={width},v={height},m={more};")?;
+            write!(
+                out,
+                "\x1b_Ga=t,q=2,f=32,i={id},s={width},v={height},m={more};"
+            )?;
         } else {
             write!(out, "\x1b_Gm={more};")?;
         }
@@ -45,7 +54,14 @@ pub fn transmit(out: &mut dyn Write, id: u32, width: u16, height: u16, rgba: &[u
 
 /// Place image `id` with its top-left at cell (col, row), scaled to fit
 /// cols x rows cells. Re-placing the same id replaces the old placement.
-pub fn place(out: &mut dyn Write, id: u32, col: u16, row: u16, cols: u16, rows: u16) -> io::Result<()> {
+pub fn place(
+    out: &mut dyn Write,
+    id: u32,
+    col: u16,
+    row: u16,
+    cols: u16,
+    rows: u16,
+) -> io::Result<()> {
     write!(
         out,
         "\x1b7\x1b[{};{}H\x1b_Ga=p,q=2,i={id},p=1,c={cols},r={rows},C=1\x1b\\\x1b8",
