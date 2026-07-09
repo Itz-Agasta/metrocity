@@ -8,6 +8,40 @@ pub struct Sprite {
     pub rgba: Vec<u8>,
 }
 
+impl Sprite {
+    /// Horizontally mirrored copy (e.g. walk cycle facing the other way).
+    pub fn flipped_h(&self) -> Sprite {
+        let w = usize::from(self.width);
+        let mut rgba = Vec::with_capacity(self.rgba.len());
+        for y in 0..usize::from(self.height) {
+            let row = &self.rgba[y * w * 4..(y + 1) * w * 4];
+            for x in (0..w).rev() {
+                rgba.extend_from_slice(&row[x * 4..x * 4 + 4]);
+            }
+        }
+        Sprite {
+            width: self.width,
+            height: self.height,
+            rgba,
+        }
+    }
+
+    /// Copy with RGB scaled by `f` (alpha unchanged), for dimmed variants.
+    pub fn dimmed(&self, f: f32) -> Sprite {
+        let mut rgba = self.rgba.clone();
+        for px in rgba.chunks_exact_mut(4) {
+            for c in &mut px[..3] {
+                *c = (f32::from(*c) * f) as u8;
+            }
+        }
+        Sprite {
+            width: self.width,
+            height: self.height,
+            rgba,
+        }
+    }
+}
+
 /// Decode a PNG (8-bit RGBA) into a single sprite.
 /// Panics on malformed input: all sheets are embedded at compile time.
 pub fn from_png_bytes(bytes: &[u8]) -> Sprite {
