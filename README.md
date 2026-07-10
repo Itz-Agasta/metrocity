@@ -18,7 +18,7 @@
   <img alt="Binary size" src="https://img.shields.io/badge/binary-%3C1MB-green">
 </p>
 
-https://github.com/user-attachments/assets/cf53dfcd-e152-4222-a36a-8b0e2b7da1d5
+https://github.com/user-attachments/assets/e3bf0c0c-ef1e-4b0d-b89d-a4db6d16ea74
 
 Metrocity activates when your shell has been idle, takes over the terminal with an animated scene (a cyberpunk city skyline or a cozy cat cafe), and exits instantly on any keypress - like a screensaver, but for your terminal. Flashes your distro logo. Goes hard in your Hyprland setup.
 
