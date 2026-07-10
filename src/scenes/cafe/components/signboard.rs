@@ -1,6 +1,9 @@
 use ratatui::buffer::Buffer;
+use ratatui::layout::Rect;
 use ratatui::style::Color;
 use ratatui::style::Style;
+
+use crate::scenes::cafe::layout::Layout;
 
 const BG: Color = Color::Rgb(25, 20, 18);
 const FRAME: Color = Color::Rgb(100, 55, 28);
@@ -10,10 +13,18 @@ const FRAME_DARK: Color = Color::Rgb(54, 29, 21);
 
 const SIGN_H: u16 = 10;
 
+/// Cells on the front sign face where the paw-print sprite sits,
+/// centered under the "FREE MEOW-FI" text.
+pub fn paw_slot(l: &Layout) -> Rect {
+    let sx = l.w.saturating_sub(24);
+    let sy = (l.floor_y + 4).saturating_sub(SIGN_H);
+    Rect::new(sx + 7, sy + 6, 4, 2)
+}
+
 /// Draws both parallelogram signs (dark behind, bright on top).
-pub fn draw(buf: &mut Buffer, x0: u16, y0: u16, area_w: u16, floor_y: u16) {
-    let base_sx = x0 + area_w.saturating_sub(24);
-    let sy = y0 + (floor_y + 4).saturating_sub(SIGN_H);
+pub fn draw(buf: &mut Buffer, l: &Layout) {
+    let base_sx = l.w.saturating_sub(24);
+    let sy = (l.floor_y + 4).saturating_sub(SIGN_H);
 
     // Back darker parallelogram
     draw_sign(buf, base_sx, sy, BG_DARK, FRAME_DARK, 15, 4, |row| row / 2);
@@ -41,15 +52,16 @@ fn draw_logo(buf: &mut Buffer, sx: u16, sy: u16, w: u16, x_off: u16) {
 
     // "FREE" centered, 2 rows down from top of sign
     let free_x = sign_sx + (w - 4) / 2;
-    buf.set_string(free_x, sy + 3, "FREE", style);
+    buf.set_string(free_x, sy + 2, "FREE", style);
 
-    // "MEOW-FI" centered, 5 rows down
+    // "MEOW-FI" centered, 4 rows down
     let meow_x = sign_sx + (w - 7) / 2;
-    buf.set_string(meow_x, sy + 5, "MEOW-FI", style);
+    buf.set_string(meow_x, sy + 4, "MEOW-FI", style);
 
-    // Paw below
+    // Paw sprite sits below, see paw_slot()
 }
 
+#[allow(clippy::too_many_arguments)]
 fn draw_sign(
     buf: &mut Buffer,
     sx: u16,

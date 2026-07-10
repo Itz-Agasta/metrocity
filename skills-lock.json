@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "generate2dsprite": {
+      "source": "0x0funky/agent-sprite-forge",
+      "sourceType": "github",
+      "skillPath": "skills/generate2dsprite/SKILL.md",
+      "computedHash": "2aa6d5f629d27a40b64257ef5ea07da7969337438d25f8e395434d216410b7e7"
+    }
+  }
+}

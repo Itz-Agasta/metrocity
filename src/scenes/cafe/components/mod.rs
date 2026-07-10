@@ -1,1 +1,10 @@
+pub mod counter_props;
+pub mod lamp;
+pub mod menu;
+pub mod neon;
+pub mod pastry_case;
+pub mod shelves;
 pub mod signboard;
+pub mod stools;
+pub mod terminal;
+pub mod window;
