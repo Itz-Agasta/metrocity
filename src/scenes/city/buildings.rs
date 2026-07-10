@@ -35,8 +35,8 @@ pub fn compute_buildings(area_width: u16, area_height: u16) -> Vec<BuildingInfo>
             continue;
         }
 
-        let mut bw = 8 + (x_base % 7) as u16;
-        let mut bh = (area_height / 3) + (x_base % 11) as u16;
+        let mut bw = 8 + (x_base % 7);
+        let mut bh = (area_height / 3) + (x_base % 11);
         let mut spans_two = false;
 
         if i == 1 {

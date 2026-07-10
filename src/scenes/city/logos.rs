@@ -72,7 +72,7 @@ pub fn get_logo(distro: &str) -> DistroLogo {
         is_compact = true;
         let white = Color::White;
         let orange = Color::Rgb(226, 88, 34);
-        let lines = vec![
+        let lines = [
             "         _    ",
             "     ---(_)   ",
             " _/  ---  \\   ",
@@ -105,7 +105,7 @@ pub fn get_logo(distro: &str) -> DistroLogo {
         is_compact = true;
         let red = Color::Rgb(215, 10, 83);
         let b_bg = Color::Reset;
-        let lines = vec![
+        let lines = [
             "  _____     ",
             " /  __ \\    ",
             "|  /    |   ",
@@ -136,7 +136,7 @@ pub fn get_logo(distro: &str) -> DistroLogo {
         let white = Color::White;
         let b_bg = Color::Reset;
 
-        let lines = vec![
+        let lines = [
             "/\\,-'''''-,/\\   ",
             "\\_)       (_/   ",
             "|           |   ",
@@ -171,7 +171,7 @@ pub fn get_logo(distro: &str) -> DistroLogo {
         let white = Color::White;
         let b_bg = Color::Reset;
 
-        let lines = vec![
+        let lines = [
             "      _____       ",
             "    \\-     -/     ",
             " \\_/         \\    ",
@@ -212,7 +212,7 @@ pub fn get_logo(distro: &str) -> DistroLogo {
         is_compact = true;
         let cyan = Color::Cyan;
         let b_bg = Color::Reset;
-        let lines = vec![
+        let lines = [
             "       /\\       ",
             "      /  \\      ",
             "     /\\   \\     ",
@@ -241,12 +241,12 @@ pub fn get_logo(distro: &str) -> DistroLogo {
     } else if d.contains("windows") {
         is_compact = true;
         let blue = Color::Rgb(0, 180, 255);
-        for y in 3..14 {
-            for x in 6..26 {
+        for (y, row) in grid.iter_mut().enumerate().take(14).skip(3) {
+            for (x, cell) in row.iter_mut().enumerate().take(26).skip(6) {
                 if x == 15 || y == 8 {
                     continue;
                 }
-                grid[y][x] = Some(LogoPixel {
+                *cell = Some(LogoPixel {
                     ch: '█',
                     color: blue,
                     bg: b_bg,
@@ -257,7 +257,7 @@ pub fn get_logo(distro: &str) -> DistroLogo {
     } else if d.contains("macos") || d.contains("apple") || d.contains("darwin") {
         is_compact = true;
         let b_bg = Color::Reset;
-        let lines = vec![
+        let lines = [
             "       .:'     ",
             "    _ :'_      ",
             " .'`_`-'_``.   ",
@@ -300,7 +300,7 @@ pub fn get_logo(distro: &str) -> DistroLogo {
         let blue = Color::Rgb(60, 110, 255);
         let white = Color::White;
         let b_bg = Color::Reset;
-        let lines = vec![
+        let lines = [
             "      _____     ",
             "     /   __)\\    ",
             "     |  /  \\ \\   ",
@@ -334,14 +334,14 @@ pub fn get_logo(distro: &str) -> DistroLogo {
                             }
                         }
                         3 => {
-                            if (x >= 4 && x <= 5) || (x >= 8 && x <= 9) {
+                            if (4..=5).contains(&x) || (8..=9).contains(&x) {
                                 white
                             } else {
                                 blue
                             }
                         }
                         4 => {
-                            if x >= 3 && x <= 10 {
+                            if (3..=10).contains(&x) {
                                 white
                             } else {
                                 blue
@@ -355,7 +355,7 @@ pub fn get_logo(distro: &str) -> DistroLogo {
                             }
                         }
                         6 => {
-                            if (x >= 3 && x <= 5) || x >= 8 {
+                            if (3..=5).contains(&x) || x >= 8 {
                                 white
                             } else {
                                 blue
@@ -425,14 +425,14 @@ pub fn get_logo(distro: &str) -> DistroLogo {
                             }
                         }
                         3 => {
-                            if (x <= 13) || (x >= 22 && x <= 24) {
+                            if (x <= 13) || (22..=24).contains(&x) {
                                 dark_cyan
                             } else {
                                 light_cyan
                             }
                         }
                         4 => {
-                            if (x <= 14) || (x >= 21 && x <= 25) {
+                            if (x <= 14) || (21..=25).contains(&x) {
                                 dark_cyan
                             } else {
                                 light_cyan
@@ -516,7 +516,7 @@ pub fn get_logo(distro: &str) -> DistroLogo {
         is_compact = true;
         let cyan = Color::Rgb(82, 187, 205);
         let b_bg = Color::Reset;
-        let lines = vec![
+        let lines = [
             "______              ",
             "\\   _ \\        __   ",
             " \\ \\ \\ \\      / /   ",
@@ -604,7 +604,7 @@ pub fn get_logo(distro: &str) -> DistroLogo {
         let purple = Color::Rgb(125, 115, 180);
         let white = Color::White;
         let b_bg = Color::Reset;
-        let lines = vec![
+        let lines = [
             " _-----_ ",
             "(       \\",
             "\\    0   \\",
@@ -634,7 +634,7 @@ pub fn get_logo(distro: &str) -> DistroLogo {
         is_compact = true;
         let green = Color::Rgb(115, 186, 37);
         let b_bg = Color::Reset;
-        let lines = vec![
+        let lines = [
             "  _______     ",
             "__|   __ \\    ",
             "     / .\\ \\   ",
@@ -664,7 +664,7 @@ pub fn get_logo(distro: &str) -> DistroLogo {
         is_compact = true;
         let green = Color::Rgb(53, 191, 92);
         let b_bg = Color::Reset;
-        let lines = vec![
+        let lines = [
             "||||||||| ||||   ",
             "||||||||| ||||   ",
             "||||      ||||   ",
@@ -694,7 +694,7 @@ pub fn get_logo(distro: &str) -> DistroLogo {
         is_compact = true;
         let green = Color::Rgb(71, 128, 97);
         let b_bg = Color::Reset;
-        let lines = vec![
+        let lines = [
             "    _______     ",
             " _ \\______ -    ",
             "| \\  ___  \\ |   ",
@@ -720,53 +720,11 @@ pub fn get_logo(distro: &str) -> DistroLogo {
             }
         }
         display_name = "Void Linux".to_string();
-    } else if d.contains("windows") {
-        is_compact = true;
-        let blue = Color::Rgb(13, 89, 127);
-        let white = Color::White;
-        let b_bg = Color::Reset;
-        let lines = vec![
-            "   /\\ /\\       ",
-            "  // \\  \\      ",
-            " //   \\  \\     ",
-            "///    \\  \\    ",
-            "//      \\  \\   ",
-            "         \\     ",
-        ];
-        let (points, min_x, min_y, offset_x, offset_y) =
-            prepare_logo_grid!(grid, lines, is_compact, b_bg, 2);
-        if !points.is_empty() {
-            for &(x, y, ch) in &points {
-                let gx = (x - min_x) + offset_x;
-                let gy = (y - min_y) + offset_y;
-                if gx < 32 && gy < 20 {
-                    let mut color = blue;
-                    if ch == '/' {
-                        if (y == 1 && x == 3)
-                            || (y == 2 && x == 2)
-                            || (y == 3 && (x == 1 || x == 2))
-                            || (y == 4 && (x == 0 || x == 1))
-                        {
-                            color = white;
-                        }
-                    }
-                    grid[gy][gx] = Some(LogoPixel {
-                        ch,
-                        color,
-                        bg: b_bg,
-                    });
-                }
-            }
-        }
-        display_name = "Windows".to_string();
     } else if d.contains("centos") {
         is_compact = true;
-        let yellow = Color::Yellow;
-        let green = Color::Green;
-        let cyan = Color::Cyan;
         let b_bg = Color::Reset;
 
-        let lines = vec![
+        let lines = [
             " ____^____    ",
             " |\\  |  /|    ",
             " | \\ | / |    ",
@@ -782,51 +740,19 @@ pub fn get_logo(distro: &str) -> DistroLogo {
                 let gx = (x - min_x) + offset_x;
                 let gy = (y - min_y) + offset_y;
                 if gx < 32 && gy < 20 {
-                    let mut color = Color::White;
-
-                    if y <= 2 && x <= 4 {
-                        color = green;
-                    } else if y == 0 && ch == '^' {
-                        color = yellow;
-                    } else if y <= 2 && x == 5 {
-                        color = yellow;
-                    } else if y <= 2 && x >= 6 {
-                        color = cyan;
-                    } else if y == 3 && x <= 4 {
-                        color = cyan;
-                    } else if y == 3 && x >= 6 {
-                        color = yellow;
-                    } else if y >= 4 && y <= 5 && x <= 4 {
-                        color = yellow;
-                    } else if y >= 4 && y <= 5 && x == 5 {
-                        color = green;
-                    } else if y >= 4 && y <= 5 && x >= 6 {
-                        color = yellow;
-                    } else if y == 6 && ch == 'v' {
-                        color = green;
-                    }
-
-                    if y <= 2 && x <= 4 {
-                        color = Color::Green;
-                    } else if y <= 2 && x == 5 {
-                        color = Color::Yellow;
-                    } else if y <= 2 && x >= 6 {
-                        color = Color::Cyan;
-                    } else if y == 3 && x <= 4 {
-                        color = Color::Cyan;
-                    } else if y == 3 && x >= 6 {
-                        color = Color::Rgb(255, 165, 0);
-                    }
-                    // Orange (c3 equivalent)
-                    else if y >= 4 && y <= 5 && x <= 4 {
-                        color = Color::Rgb(255, 165, 0);
-                    } else if y >= 4 && y <= 5 && x == 5 {
-                        color = Color::Green;
-                    } else if y >= 4 && y <= 5 && x >= 6 {
-                        color = Color::Yellow;
-                    } else if y == 6 {
-                        color = Color::Green;
-                    }
+                    // Quadrant colors: green/yellow/cyan cross, orange arms
+                    let color = if (y <= 2 && x <= 4) || ((4..=5).contains(&y) && x == 5) || y == 6
+                    {
+                        Color::Green
+                    } else if (y <= 2 && x == 5) || ((4..=5).contains(&y) && x >= 6) {
+                        Color::Yellow
+                    } else if (y <= 2 && x >= 6) || (y == 3 && x <= 4) {
+                        Color::Cyan
+                    } else if (y == 3 && x >= 6) || ((4..=5).contains(&y) && x <= 4) {
+                        Color::Rgb(255, 165, 0)
+                    } else {
+                        Color::White
+                    };
 
                     grid[gy][gx] = Some(LogoPixel {
                         ch,
@@ -841,7 +767,7 @@ pub fn get_logo(distro: &str) -> DistroLogo {
         is_compact = true;
         let green = Color::Rgb(141, 198, 63);
         let b_bg = Color::Reset;
-        let lines = vec![
+        let lines = [
             " ___________ ",
             "|_          \\",
             "  | | _____ |",
@@ -870,7 +796,7 @@ pub fn get_logo(distro: &str) -> DistroLogo {
         is_compact = true;
         let green = Color::Rgb(164, 198, 57);
         let b_bg = Color::Reset;
-        let lines = vec![
+        let lines = [
             "  ;,           ,; ",
             "   ';,.-----.,;'  ",
             "  ,'           ', ",
@@ -898,7 +824,7 @@ pub fn get_logo(distro: &str) -> DistroLogo {
         is_compact = true;
         let blue = Color::Rgb(64, 150, 238);
         let b_bg = Color::Reset;
-        let lines = vec![
+        let lines = [
             "  _______  ",
             " / ____  \\ ",
             "/  |  /  /\\",
@@ -926,7 +852,7 @@ pub fn get_logo(distro: &str) -> DistroLogo {
         is_compact = true;
         let blue = Color::Rgb(50, 100, 200);
         let b_bg = Color::Reset;
-        let lines = vec![
+        let lines = [
             "   ________   ",
             "  /  ______|  ",
             "  | |______   ",
@@ -956,7 +882,7 @@ pub fn get_logo(distro: &str) -> DistroLogo {
         let cyan = Color::Rgb(0, 255, 255);
         let white = Color::White;
         let b_bg = Color::Reset;
-        let lines = vec![
+        let lines = [
             "       _------.      ",
             "      /  ,     \\_    ",
             "    /   /  /{}\\ |o\\_ ",
@@ -999,7 +925,7 @@ pub fn get_logo(distro: &str) -> DistroLogo {
         let c2 = Color::Rgb(125, 124, 196);
         let c3 = Color::Rgb(0, 180, 255);
         let b_bg = Color::Reset;
-        let lines = vec![
+        let lines = [
             "           /*",
             "         #***** ",
             "       #********#",
@@ -1019,35 +945,35 @@ pub fn get_logo(distro: &str) -> DistroLogo {
                     match y {
                         0 => color = c1,
                         1 => {
-                            if x >= 10 && x <= 13 {
+                            if (10..=13).contains(&x) {
                                 color = c2;
                             } else if x == 14 {
                                 color = c3;
                             }
                         }
                         2 => {
-                            if x >= 8 && x <= 15 {
+                            if (8..=15).contains(&x) {
                                 color = c2;
                             } else if x == 16 {
                                 color = c3;
                             }
                         }
                         3 => {
-                            if x >= 7 && x <= 16 {
+                            if (7..=16).contains(&x) {
                                 color = c2;
                             } else if x >= 17 {
                                 color = c3;
                             }
                         }
                         4 => {
-                            if x >= 6 && x <= 17 {
+                            if (6..=17).contains(&x) {
                                 color = c2;
                             } else if x >= 18 {
                                 color = c3;
                             }
                         }
                         5 => {
-                            if x >= 5 && x <= 17 {
+                            if (5..=17).contains(&x) {
                                 color = c2;
                             } else if x >= 18 {
                                 color = c3;
@@ -1102,7 +1028,7 @@ pub fn get_logo(distro: &str) -> DistroLogo {
         is_compact = true;
         let blue = Color::Rgb(0, 173, 239);
         let b_bg = Color::Reset;
-        let lines = vec![
+        let lines = [
             "       ZZZZZZ",
             "           ZZ",
             "         ZZ  ",
@@ -1131,7 +1057,7 @@ pub fn get_logo(distro: &str) -> DistroLogo {
         let pink = Color::Rgb(255, 0, 255);
         let purple = Color::Rgb(128, 0, 255);
         let b_bg = Color::Reset;
-        let lines = vec![
+        let lines = [
             "        .~~~~-.        ",
             "       /    ,__`)      ",
             "      |      \\o/|'-.   ",
@@ -1162,7 +1088,7 @@ pub fn get_logo(distro: &str) -> DistroLogo {
         is_compact = true;
         let cyan = Color::Cyan;
         let b_bg = Color::Reset;
-        let lines = vec![
+        let lines = [
             "      /\\     ",
             "     /  \\    ",
             "    /\\   \\   ",
@@ -1340,21 +1266,16 @@ pub fn get_logo(distro: &str) -> DistroLogo {
                 if gx < 32 && gy < 20 {
                     let mut color = wireframe_body;
 
-                    if y == 3 && x >= 8 && x <= 13 {
+                    if y == 3 && (8..=13).contains(&x) {
                         color = white_eyes;
-                    } else if y == 4 && x >= 8 && x <= 13 {
-                        color = neon_orange;
-                    } else if y == 5 && x >= 8 && x <= 12 {
-                        color = neon_orange;
-                    } else if y == 11 && ((x >= 1 && x <= 6) || (x >= 15 && x <= 16)) {
-                        color = neon_orange;
-                    } else if y == 12 && ((x >= 1 && x <= 7) || (x >= 15 && x <= 18) || x == 20) {
-                        color = neon_orange;
-                    } else if y == 13 {
-                        color = neon_orange;
-                    } else if y == 14 && (x <= 8 || x >= 15) {
-                        color = neon_orange;
-                    } else if y == 15 {
+                    } else if (y == 4 && (8..=13).contains(&x))
+                        || (y == 5 && (8..=12).contains(&x))
+                        || (y == 11 && ((1..=6).contains(&x) || (15..=16).contains(&x)))
+                        || (y == 12 && ((1..=7).contains(&x) || (15..=18).contains(&x) || x == 20))
+                        || y == 13
+                        || (y == 14 && (x <= 8 || x >= 15))
+                        || y == 15
+                    {
                         color = neon_orange;
                     }
 

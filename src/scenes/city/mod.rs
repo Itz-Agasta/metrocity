@@ -193,7 +193,7 @@ impl CityScene {
         let bg_color = darken_color(self.theme.building_base_colors[0]);
         for x_bg in (0..area.width).step_by(15) {
             let bw = bg_rng.gen_range(6..15) as u16;
-            let bh = bg_rng.gen_range(area.height / 5..area.height / 2) as u16;
+            let bh = bg_rng.gen_range(area.height / 5..area.height / 2);
             let start_x = area.x.saturating_add(x_bg);
             let start_y = ground_y.saturating_sub(bh);
             for y_rel in 0..bh {
@@ -277,11 +277,12 @@ impl CityScene {
                                     for dx_off in -1..=1 {
                                         let check_y = (y_rel as i32 + dy_off) as usize;
                                         let check_x = (x_rel as i32 + dx_off) as usize;
-                                        if check_y < 20 && check_x < 32 {
-                                            if logo_asset.grid[check_y][check_x].is_some() {
-                                                near_logo = true;
-                                                break;
-                                            }
+                                        if check_y < 20
+                                            && check_x < 32
+                                            && logo_asset.grid[check_y][check_x].is_some()
+                                        {
+                                            near_logo = true;
+                                            break;
                                         }
                                     }
                                     if near_logo {
@@ -294,7 +295,7 @@ impl CityScene {
                                 && is_win_row
                                 && x_rel > 0
                                 && x_rel < x_clearance
-                                && (dx.wrapping_add(dy as u16)) % 4 == 0
+                                && (dx.wrapping_add(dy)) % 4 == 0
                             {
                                 let door_x = bw / 2;
                                 if !(y_rel >= bh.saturating_sub(3)
@@ -647,7 +648,7 @@ impl CityScene {
                 continue;
             }
             let vx_f = area.x as f32 + v.x;
-            let vy = area.y as u16 + v.y as u16;
+            let vy = area.y + v.y as u16;
             if vy >= area.y + area.height {
                 continue;
             }
@@ -656,9 +657,7 @@ impl CityScene {
                 VehicleType::Spinner => (vec!['◢', '■', '◣'], Some(self.theme.police_red)),
                 VehicleType::Shuttle => {
                     let mut b = vec!['▓'];
-                    for _ in 0..v.length.saturating_sub(2) {
-                        b.push('█');
-                    }
+                    b.resize(1 + v.length.saturating_sub(2) as usize, '█');
                     b.push('▶');
                     (b, Some(self.theme.neon_main))
                 }
@@ -694,7 +693,7 @@ impl CityScene {
             if v.v_type == VehicleType::Police && vy > area.y {
                 let sy = vy.saturating_sub(1);
                 let flash = (self.frame_count / 2) % 2 == 0;
-                for (sx_f, base_color, is_on) in vec![
+                for (sx_f, base_color, is_on) in [
                     (vx_f, self.theme.police_blue, flash),
                     (vx_f + 2.0, self.theme.police_red, !flash),
                 ] {
@@ -736,7 +735,7 @@ impl CityScene {
                         };
                         if v.v_type == VehicleType::Shuttle {
                             safe_set_char_with_bg(buf, tx, vy, ':', t_color, t_bg);
-                            if tx >= area.x + 1 {
+                            if tx > area.x {
                                 let s2 = safe_get_symbol(buf, tx.saturating_sub(1), vy);
                                 let t2_bg = if s2 == "█" || s2 == "▓" || s2 == "▆" || s2 == "▄"
                                 {
@@ -828,7 +827,7 @@ impl Scene for CityScene {
     fn init(&mut self, width: u16, height: u16, theme: &Theme) {
         self.width = width;
         self.height = height;
-        self.theme = theme.clone();
+        self.theme = *theme;
 
         // Detect distro once
         if self.distro.is_empty() {

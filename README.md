@@ -1,35 +1,47 @@
-<p align="center">
-  <h1 align="center">Metrocity</h1>
+<h1 align="center">Metrocity</h1>
 
-  <p align="center">
-    Terminal idle eye candy for people who treat their terminal like a desktop wallpaper.
-  </p>
+<p align="center">
+  <b>A terminal screensaver for Linux - animated pixel-art scenes that take over your idle shell.</b>
 </p>
 
+<p align="center">
+  <a href="#install">Install</a> ·
+  <a href="#scenes">Scenes</a> ·
+  <a href="#setup">Shell setup</a> ·
+  <a href="#configuration">Configuration</a> ·
+  <a href="#themes">Themes</a>
+</p>
 
+<p align="center">
+  <img alt="Rust" src="https://img.shields.io/badge/rust-1.75+-orange?logo=rust">
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-blue">
+  <img alt="Binary size" src="https://img.shields.io/badge/binary-%3C1MB-green">
+</p>
 
 https://github.com/user-attachments/assets/cf53dfcd-e152-4222-a36a-8b0e2b7da1d5
 
-Activates when your shell is idle, takes over the terminal with an animated scene, and exits instantly on any keypress. Flashes your distro logo, Goes hard in your Hyprland setup.
+Metrocity activates when your shell has been idle, takes over the terminal with an animated scene (a cyberpunk city skyline or a cozy cat cafe), and exits instantly on any keypress - like a screensaver, but for your terminal. Flashes your distro logo. Goes hard in your Hyprland setup.
 
-Built with [Rust](https://www.rust-lang.org/), [Ratatui](https://ratatui.rs/), [Crossterm](https://github.com/crossterm-rs/crossterm), and the [Kitty image protocol](https://sw.kovidgoyal.net/kitty/graphics-protocol/).
+Built with [Rust](https://www.rust-lang.org/), [Ratatui](https://ratatui.rs/), [Crossterm](https://github.com/crossterm-rs/crossterm), and the [Kitty graphics protocol](https://sw.kovidgoyal.net/kitty/graphics-protocol/).
 
 ## Features
 
-- Multiple animated scenes with weather, movement, and atmosphere
-- Auto-detects your distro and renders its logo
-- 6 built-in color themes: cyberpunk, matrix, synthwave, dracula, sin\_city, default
-- Custom themes via TOML — match your terminal, rice it your way
-- Shell integration for zsh and bash — activates automatically on idle
+- **Animated scenes** with weather, traffic, wandering cats, and atmosphere
+- **Pixel-art sprites** rendered over the character grid via the Kitty graphics protocol
+- **Distro detection** - renders your distro's logo on a building
+- **6 built-in color themes** plus custom themes via TOML
+- **Shell integration** for zsh and bash - activates automatically on idle
+- **Instant exit** - any keypress restores your terminal exactly as it was
+- **Tiny** - under 1MB release binary, no runtime dependencies
 
 ## Scenes
 
-| Scene  | Description                    |
-|--------|--------------------------------|
-| `city` | Cyberpunk skyline with traffic |
-| `cafe` | Cozy cat cafe interior         |
-- Any keypress instantly exits and restores your terminal
-- Under 1MB release binary
+| Scene  | Description |
+|--------|-------------|
+| `city` | Cyberpunk skyline: neon buildings, flying traffic, rain, your distro logo |
+| `cafe` | Cozy cat cafe: two animated pixel cats, neon sign, rain on the window, pastries |
+
+The cafe scene layers pixel-art sprites (cats, plants, pastries, neon sign) on top of the character grid. Sprites need a terminal that supports the Kitty graphics protocol - kitty, WezTerm, or Ghostty. On other terminals the scene still renders, just without the sprites.
 
 ## Install
 
@@ -70,16 +82,16 @@ eval "$(metrocity shell-init bash)"
 
 ### Manual launch
 
-Just run `metrocity` — it takes over the terminal, press any key to exit.
+Just run `metrocity` - it takes over the terminal, press any key to exit.
 
 ## Usage
 
 ```
 metrocity                              # Start immediately
+metrocity --scene cafe                 # Lock to a specific scene (city, cafe)
 metrocity --theme cyberpunk            # Override color theme
-metrocity --weather rain               # Force weather mode
+metrocity --weather rain               # Force weather mode (rain, snow, clear)
 metrocity --fps 60                     # Target frame rate
-metrocity --scene city                 # Lock to a specific scene
 
 metrocity shell-init zsh               # Print zsh integration snippet
 metrocity shell-init bash              # Print bash integration snippet
@@ -95,13 +107,7 @@ metrocity --version                    # Print version
 
 ## Configuration
 
-Config file: `~/.config/metrocity/config.toml`
-
-Generate with:
-
-```bash
-metrocity config --init
-```
+Config file: `~/.config/metrocity/config.toml`. Generate it with `metrocity config --init`:
 
 ```toml
 [engine]
@@ -124,9 +130,20 @@ custom_color = ""
 override_distro = ""
 ```
 
+## Themes
+
+| Theme | Description |
+|-------|-------------|
+| `cyberpunk` | Neon-drenched magenta and cyan |
+| `matrix` | Green-on-black digital rain |
+| `synthwave` | Retro sunset orange and pink |
+| `dracula` | Purple-pink gothic palette |
+| `sin_city` | Stark black, white, and red |
+| `default` | Balanced dark tones |
+
 ### Custom themes
 
-Place a TOML file at `~/.config/metrocity/themes/<name>.toml`:
+Place a TOML file at `~/.config/metrocity/themes/<name>.toml` and use it with `metrocity --theme <name>`:
 
 ```toml
 [building]
@@ -159,24 +176,11 @@ ground = "#282832"
 logo = "#ff0000"
 ```
 
-Then use it with `metrocity --theme <name>`.
-
-## Themes
-
-| Theme | Description |
-|-------|-------------|
-| `cyberpunk` | Neon-drenched magenta and cyan |
-| `matrix` | Green-on-black digital rain |
-| `synthwave` | Retro sunset orange and pink |
-| `dracula` | Purple-pink gothic palette |
-| `sin_city` | Stark black, white, and red |
-| `default` | Balanced dark tones |
-
 ## How it works
 
-1. **Shell integration** — After `METROCITY_TIMEOUT` seconds of idle time at the prompt, your shell launches `metrocity`.
-2. **Terminal takeover** — `metrocity` enters raw mode, switches to the alternate screen buffer, and hides the cursor.
-3. **Render loop** — At the target FPS, it updates the simulation and redraws the scene.
-4. **Any key exits** — Any keypress breaks the loop, restores the terminal, and returns control to your shell.
+1. **Shell integration** - after `METROCITY_TIMEOUT` seconds of idle time at the prompt, your shell launches `metrocity`.
+2. **Terminal takeover** - it enters raw mode, switches to the alternate screen buffer, and hides the cursor.
+3. **Render loop** - at the target FPS it updates the simulation and redraws the scene; on Kitty-capable terminals, pixel sprites are composited on top of the character cells.
+4. **Any key exits** - a keypress breaks the loop, cleans up sprites, restores the terminal, and returns control to your shell.
 
-Pairs well with Hyprland, fastfetch, and ~/.config tinkering.
+Pairs well with Hyprland, fastfetch, and `~/.config` tinkering.

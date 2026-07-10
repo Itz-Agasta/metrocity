@@ -1,4 +1,4 @@
-use std::io;
+use std::io::{self, Write};
 use std::time::{Duration, Instant};
 
 use crossterm::{
@@ -26,7 +26,11 @@ impl Engine {
     }
 
     /// Run the engine with the given scene. Blocks until exit.
-    pub fn run(&mut self, scene: &mut dyn Scene) -> Result<(), Box<dyn std::error::Error>> {
+    pub fn run(
+        &mut self,
+        scene: &mut dyn Scene,
+        theme: &crate::theme::Theme,
+    ) -> Result<(), Box<dyn std::error::Error>> {
         // Setup terminal
         enable_raw_mode()?;
         let mut stdout = io::stdout();
@@ -36,8 +40,7 @@ impl Engine {
 
         // Initialize scene with terminal size
         let size = terminal.size()?;
-        let theme = crate::theme::Theme::default(); // TODO: accept theme from config
-        scene.init(size.width, size.height, &theme);
+        scene.init(size.width, size.height, theme);
 
         // Main loop
         let tick_rate = Duration::from_millis((1000 / self.fps) as u64);
@@ -52,7 +55,7 @@ impl Engine {
                     }
                     Event::Resize(_, _) => {
                         let size = terminal.size()?;
-                        scene.init(size.width, size.height, &theme);
+                        scene.init(size.width, size.height, theme);
                     }
                     _ => {}
                 }
@@ -61,16 +64,24 @@ impl Engine {
             if last_tick.elapsed() >= tick_rate {
                 let dt = last_tick.elapsed().as_secs_f64();
                 last_tick = Instant::now();
-                scene.update(dt.min(0.1)); // cap dt to prevent jumps
+                scene.update(dt.min(0.1));
                 terminal.draw(|f| {
                     let area = f.area();
                     let buf = f.buffer_mut();
                     scene.draw(area, buf);
                 })?;
+                // terminal.draw() flushed the backend, so raw writes to the
+                // same fd land after the frame. ratatui issues an absolute
+                // MoveTo on the next draw, so cursor state cannot desync.
+                let mut out = io::stdout();
+                scene.post_draw(&mut out)?;
+                out.flush()?;
             }
         }
 
-        // Restore terminal
+        let mut out = io::stdout();
+        scene.cleanup(&mut out)?;
+        out.flush()?;
         disable_raw_mode()?;
         execute!(terminal.backend_mut(), LeaveAlternateScreen)?;
         terminal.show_cursor()?;

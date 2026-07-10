@@ -18,6 +18,9 @@ clap = { version = "4", features = ["derive"] }
 serde = { version = "1.0", features = ["derive"] }
 toml = "0.8"
 directories = "5.0"
+base64 = "0.22"
+png = "0.18"
+
 
 [profile.release]
 opt-level = "z"

@@ -18,7 +18,7 @@ pub struct Vehicle {
 }
 
 pub fn get_sky_lane(rng: &mut impl rand::Rng) -> f32 {
-    let lanes = vec![5.0, 8.0, 11.0, 14.0];
+    let lanes = [5.0, 8.0, 11.0, 14.0];
     lanes[rng.gen_range(0..lanes.len())]
 }
 
