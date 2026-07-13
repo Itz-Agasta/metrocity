@@ -3,8 +3,11 @@ name = "metrocity"
 version = "0.1.0"
 edition = "2021"
 rust-version = "1.75.0"
-description = "A terminal screensaver — cyberpunk skyline that activates on idle"
+description = "A terminal screensaver with animated pixel-art scenes that activate on idle"
 license = "MIT"
+repository = "https://github.com/Itz-Agasta/metrocity"
+homepage = "https://github.com/Itz-Agasta/metrocity"
+readme = "README.md"
 
 [[bin]]
 name = "metrocity"

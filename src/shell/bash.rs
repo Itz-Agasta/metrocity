@@ -14,7 +14,14 @@ _metrocity_schedule() {
   (
     sleep "${timeout}"
     [[ "$(ps -o stat= -p $$)" == *"+"* ]] || exit 0
-    command -v metrocity >/dev/null 2>&1 && metrocity
+    # Pick scene from METROCITY_SCENE if set, otherwise metrocity uses its
+    # configured default (cafe).
+    command -v metrocity >/dev/null 2>&1 || exit 0
+    if [[ -n "${METROCITY_SCENE}" ]]; then
+      metrocity --scene "${METROCITY_SCENE}"
+    else
+      metrocity
+    fi
   ) &
   _METROCITY_PID=$!
   set -m

@@ -15,7 +15,7 @@
 <p align="center">
   <img alt="Rust" src="https://img.shields.io/badge/rust-1.75+-orange?logo=rust">
   <img alt="License" src="https://img.shields.io/badge/license-MIT-blue">
-  <img alt="Binary size" src="https://img.shields.io/badge/binary-%3C1MB-green">
+  <img alt="Binary size" src="https://img.shields.io/badge/binary-~1.4MB-green">
 </p>
 
 https://github.com/user-attachments/assets/e3bf0c0c-ef1e-4b0d-b89d-a4db6d16ea74
@@ -32,7 +32,7 @@ Built with [Rust](https://www.rust-lang.org/), [Ratatui](https://ratatui.rs/), [
 - **6 built-in color themes** plus custom themes via TOML
 - **Shell integration** for zsh and bash - activates automatically on idle
 - **Instant exit** - any keypress restores your terminal exactly as it was
-- **Tiny** - under 1MB release binary, no runtime dependencies
+- **Tiny** - ~1.4MB release binary, no runtime dependencies
 
 ## Scenes
 
@@ -57,7 +57,7 @@ sudo cp target/release/metrocity /usr/local/bin/
 ### Arch Linux (AUR)
 
 ```bash
-paru -S metrocity
+paru -S metrocity # soon ig :(
 ```
 
 ## Setup
@@ -68,6 +68,7 @@ Add to your `~/.zshrc`:
 
 ```bash
 export METROCITY_TIMEOUT=120  # seconds of idle before activation (default: 120)
+export METROCITY_SCENE=cafe   # scene to launch: cafe (default) or city
 eval "$(metrocity shell-init zsh)"
 ```
 
@@ -77,8 +78,17 @@ Add to your `~/.bashrc`:
 
 ```bash
 export METROCITY_TIMEOUT=120
+export METROCITY_SCENE=cafe
 eval "$(metrocity shell-init bash)"
 ```
+
+`METROCITY_SCENE` is optional. If unset, metrocity uses the default scene (`cafe`). Set it to `city` for the cyberpunk skyline.
+
+
+> **Add these lines to your shell config file, not just the current terminal.**
+> `eval` only affects the shell that runs it, so pasting it into one terminal
+> activates metrocity there only. Put it in `~/.zshrc` / `~/.bashrc`, then open
+> a new terminal (or run `source ~/.zshrc`) so every shell picks it up.
 
 ### Manual launch
 
@@ -112,13 +122,14 @@ Config file: `~/.config/metrocity/config.toml`. Generate it with `metrocity conf
 ```toml
 [engine]
 fps = 30
+scene = "cafe"  # cafe or city
 
 [appearance]
-theme = "cyberpunk"
+theme = "default"
 weather = "rain"
 
 [simulation]
-max_vehicles = 30
+max_vehicles = 50
 max_pedestrians = 15
 vehicle_speed_multiplier = 1.0
 weather_speed_multiplier = 1.0

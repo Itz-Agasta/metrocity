@@ -7,7 +7,15 @@ _metrocity_activate() {
   [[ -n "${METROCITY_RUNNING}" ]] && return
 
   export METROCITY_RUNNING=1
-  command -v metrocity >/dev/null 2>&1 && metrocity
+  # Pick scene from METROCITY_SCENE if set, otherwise metrocity uses its
+  # configured default (cafe).
+  if command -v metrocity >/dev/null 2>&1; then
+    if [[ -n "${METROCITY_SCENE}" ]]; then
+      metrocity --scene "${METROCITY_SCENE}"
+    else
+      metrocity
+    fi
+  fi
   unset METROCITY_RUNNING
 }
 
