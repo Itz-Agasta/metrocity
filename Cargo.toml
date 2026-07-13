@@ -8,6 +8,8 @@ license = "MIT"
 repository = "https://github.com/Itz-Agasta/metrocity"
 homepage = "https://github.com/Itz-Agasta/metrocity"
 readme = "README.md"
+keywords = ["screensaver", "terminal", "tui", "ratatui", "cli"]
+categories = ["command-line-utilities"]
 
 [[bin]]
 name = "metrocity"

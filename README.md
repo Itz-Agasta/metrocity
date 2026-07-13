@@ -54,6 +54,12 @@ cargo build --release
 sudo cp target/release/metrocity /usr/local/bin/
 ```
 
+### From crates.io
+
+```bash
+cargo install metrocity
+```
+
 ### Arch Linux (AUR)
 
 ```bash
