@@ -35,7 +35,7 @@ impl Default for EngineConfig {
     fn default() -> Self {
         Self {
             fps: 30,
-            scene: String::from("city"),
+            scene: String::from("cafe"),
             cycle_seconds: 0,
             shuffle: false,
             oled_shift: false,
