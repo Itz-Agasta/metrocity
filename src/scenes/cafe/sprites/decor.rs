@@ -69,9 +69,11 @@ impl Decor {
     }
 
     pub fn init(&mut self) {
-        // Force re-placement at the new geometry on the next post_draw
+        // Force re-placement at the new geometry on the next post_draw.
         self.placed = false;
         self.last_dim = None;
+        // Resize drops transmitted images, so re-send them on the next draw.
+        self.transmitted = false;
     }
 
     pub fn set_dim(&mut self, dim: bool) {

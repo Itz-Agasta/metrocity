@@ -207,9 +207,12 @@ impl Cats {
         self.white.range = (wx - 5.0, wx + 5.0);
         self.white.x = wx;
 
-        // Force re-placement at the new geometry on the next post_draw
+        // Force re-placement at the new geometry on the next post_draw.
         self.black.last = None;
         self.white.last = None;
+        // A resize re-runs init(); terminals drop transmitted images on resize,
+        // so re-send them (not just re-place) or the cats vanish until restart.
+        self.transmitted = false;
     }
 
     pub fn update(&mut self, dt: f64) {
