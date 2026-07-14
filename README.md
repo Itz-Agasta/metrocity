@@ -30,7 +30,7 @@ Built with [Rust](https://www.rust-lang.org/), [Ratatui](https://ratatui.rs/), [
 - **Pixel-art sprites** rendered over the character grid via the Kitty graphics protocol
 - **Distro detection** - renders your distro's logo on a building
 - **6 built-in color themes** plus custom themes via TOML
-- **Shell integration** for zsh and bash - activates automatically on idle
+- **Shell integration** for zsh, bash and fish - activates automatically on idle
 - **Instant exit** - any keypress restores your terminal exactly as it was
 - **Tiny** - ~1.4MB release binary, no runtime dependencies
 
@@ -88,13 +88,24 @@ export METROCITY_SCENE=cafe
 eval "$(metrocity shell-init bash)"
 ```
 
+### Fish
+
+Add to your `~/.config/fish/config.fish`:
+
+```fish
+set -gx METROCITY_TIMEOUT 120
+set -gx METROCITY_SCENE cafe
+metrocity shell-init fish | source
+```
+
 `METROCITY_SCENE` is optional. If unset, metrocity uses the default scene (`cafe`). Set it to `city` for the cyberpunk skyline.
 
 
 > **Add these lines to your shell config file, not just the current terminal.**
-> `eval` only affects the shell that runs it, so pasting it into one terminal
-> activates metrocity there only. Put it in `~/.zshrc` / `~/.bashrc`, then open
-> a new terminal (or run `source ~/.zshrc`) so every shell picks it up.
+> `eval` (or `| source` in fish) only affects the shell that runs it, so pasting
+> it into one terminal activates metrocity there only. Put it in `~/.zshrc` /
+> `~/.bashrc` / `~/.config/fish/config.fish`, then open a new terminal (or
+> re-source the file) so every shell picks it up.
 
 ### Manual launch
 
@@ -111,6 +122,7 @@ metrocity --fps 60                     # Target frame rate
 
 metrocity shell-init zsh               # Print zsh integration snippet
 metrocity shell-init bash              # Print bash integration snippet
+metrocity shell-init fish              # Print fish integration snippet
 
 metrocity list scenes                  # List available scenes
 metrocity list themes                  # List available themes
