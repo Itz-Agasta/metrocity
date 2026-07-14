@@ -29,12 +29,6 @@ pub const PETAL_ORANGE: Color = Color::Rgb(240, 148, 48);
 pub const PETAL_ORANGE_DARK: Color = Color::Rgb(198, 92, 34);
 pub const FLOWER_CENTER: Color = Color::Rgb(96, 58, 32);
 
-// Distant cabin
-pub const CABIN: Color = Color::Rgb(150, 102, 66);
-pub const CABIN_ROOF: Color = Color::Rgb(104, 66, 44);
-pub const CABIN_DOOR: Color = Color::Rgb(74, 46, 28);
-pub const CHIMNEY: Color = Color::Rgb(92, 58, 40);
-pub const SMOKE: Color = Color::Rgb(212, 212, 216);
 pub const HILL: Color = Color::Rgb(140, 166, 104);
 
 // Picnic blanket

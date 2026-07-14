@@ -1,5 +1,6 @@
-//! Static decor sprites (beehive, hunny pot, book) plus a small swarm of bees
-//! that bob around the hive and the hunny pot.
+//! Static decor sprites (beehive, hunny pot, book), a small swarm of bees that
+//! bob around the hive and the hunny pot, and a distant windmill whose sails
+//! turn slowly.
 
 use std::io::{self, Write};
 
@@ -13,13 +14,17 @@ const HIVE: &[u8] = include_bytes!("../../../../assets/meadow/props/beehive.png"
 const BEE: &[u8] = include_bytes!("../../../../assets/meadow/props/bee.png");
 const HUNNY: &[u8] = include_bytes!("../../../../assets/meadow/props/hunny.png");
 const BOOK: &[u8] = include_bytes!("../../../../assets/meadow/props/book.png");
+const WINDMILL: &[u8] = include_bytes!("../../../../assets/meadow/props/windmill.png");
 
 const FRAME_W: u16 = 64;
+const WINDMILL_FRAME_W: u16 = 100;
+const WINDMILL_SPIN_DT: f64 = 0.5; // seconds per rotor frame
 
 const HIVE_ID: u32 = 400;
 const HUNNY_ID: u32 = 420;
 const BOOK_ID: u32 = 430;
 const BEE_BASE: u32 = 410; // one image id per bee (410..)
+const WINDMILL_BASE: u32 = 440; // one image id per rotor frame (440..)
 const BEE_CELLS: (u16, u16) = (3, 2);
 
 /// What a bee hovers around.
@@ -70,9 +75,11 @@ pub struct Decor {
     bee: Sprite,
     hunny: Sprite,
     book: Sprite,
+    windmill: Vec<Sprite>,
     bees: Vec<Bee>,
     transmitted: bool,
     placed: bool,
+    windmill_last: Option<(u32, u16, u16)>,
     t: f64,
 }
 
@@ -84,9 +91,11 @@ impl Decor {
             bee: sprite::load_strip(BEE, FRAME_W).swap_remove(0),
             hunny: sprite::from_png_bytes(HUNNY),
             book: sprite::from_png_bytes(BOOK),
+            windmill: sprite::load_strip(WINDMILL, WINDMILL_FRAME_W),
             bees: bees(),
             transmitted: false,
             placed: false,
+            windmill_last: None,
             t: 0.0,
         }
     }
@@ -95,6 +104,7 @@ impl Decor {
         self.placed = false;
         // Resize drops transmitted images, so re-send them on the next draw.
         self.transmitted = false;
+        self.windmill_last = None;
         for bee in &mut self.bees {
             bee.last = None;
         }
@@ -118,6 +128,10 @@ impl Decor {
         for bee in &self.bees {
             kitty::transmit(out, bee.id, b.width, b.height, &b.rgba)?;
         }
+        // One image id per windmill rotor frame.
+        for (i, s) in self.windmill.iter().enumerate() {
+            kitty::transmit(out, WINDMILL_BASE + i as u32, s.width, s.height, &s.rgba)?;
+        }
         self.transmitted = true;
         Ok(())
     }
@@ -125,6 +139,24 @@ impl Decor {
     pub fn post_draw(&mut self, out: &mut dyn Write, l: &Layout) -> io::Result<()> {
         if !self.transmitted {
             self.transmit(out)?;
+        }
+
+        // Distant windmill: cycle the rotor frames so the sails turn. Drawn
+        // first so it sits behind the foreground props and animals.
+        if !self.windmill.is_empty() {
+            let frame = (self.t / WINDMILL_SPIN_DT) as usize % self.windmill.len();
+            let id = WINDMILL_BASE + frame as u32;
+            let m = l.windmill;
+            let cur = Some((id, m.x, m.y));
+            if self.windmill_last != cur && m.right() <= l.w && m.bottom() <= l.h {
+                if let Some((old, _, _)) = self.windmill_last {
+                    if old != id {
+                        kitty::delete_placement(out, old)?;
+                    }
+                }
+                kitty::place(out, id, m.x, m.y, m.width, m.height)?;
+                self.windmill_last = cur;
+            }
         }
 
         if !self.placed {

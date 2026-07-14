@@ -80,7 +80,6 @@ impl Scene for MeadowScene {
         background::render(buf, l, self.t);
         components::clouds::draw(buf, l, self.t);
         components::birds::draw(buf, l, self.t);
-        components::cabin::draw(buf, l, self.t);
         components::tree::draw(buf, l);
         components::sunflowers::draw(buf, l, self.t);
         components::leaves::draw(buf, l, self.t);

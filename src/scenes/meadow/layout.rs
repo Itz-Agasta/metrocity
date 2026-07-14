@@ -39,8 +39,8 @@ pub struct Layout {
     // the patch, bottom() is the base row, height is the flower height.
     pub sunflowers: Rect,
 
-    // Distant cabin (right)
-    pub cabin: Rect,
+    // Distant windmill sprite placement (col, row, cols, rows)
+    pub windmill: Rect,
 
     // Picnic
     pub blanket: Rect,
@@ -95,8 +95,8 @@ impl Layout {
         let sf_h = 8u16.clamp(4, sf_base.saturating_sub(horizon_y + 1).max(4));
         let sunflowers = Rect::new(pw(11), sf_base.saturating_sub(sf_h), 11, sf_h);
 
-        // Distant cabin near the horizon on the right.
-        let cabin = Rect::new(pw(84), horizon_y.saturating_sub(4), 11, 5);
+        // Distant windmill sprite on the right, its base near the horizon.
+        let windmill = Rect::new(pw(80), horizon_y.saturating_sub(6), 12, 7);
 
         // The three friends, grouped center: badger, sloth, capybara.
         let sloth = Slot {
@@ -114,11 +114,13 @@ impl Layout {
 
         // Picnic anchored to the sloth (fixed cell offsets, not a percentage)
         // so the hunny pot always sits right where the sloth's hand reaches,
-        // whatever the terminal width. The pot is at the sloth's front-right.
+        // whatever the terminal width. The book (front-left) and pot
+        // (front-right) sit symmetric around the sloth, and the blanket is
+        // centered under the sloth's body so it looks balanced.
         let picnic_x = sloth.start;
         let hunny = Rect::new(picnic_x + 8, ground_y.saturating_sub(2), 5, 3);
         let book = Rect::new(picnic_x + 2, ground_y.saturating_sub(1), 5, 2);
-        let blanket_x = picnic_x + 1;
+        let blanket_x = picnic_x.saturating_sub(2);
         let blanket = Rect::new(blanket_x, ground_y, 15.min(w.saturating_sub(blanket_x)), 2);
 
         Self {
@@ -135,7 +137,7 @@ impl Layout {
             branch_y,
             branch_x_end,
             sunflowers,
-            cabin,
+            windmill,
             blanket,
             animal_rows,
             capy,

@@ -1,6 +1,5 @@
 pub mod birds;
 pub mod blanket;
-pub mod cabin;
 pub mod clouds;
 pub mod leaves;
 pub mod sunflowers;
