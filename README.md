@@ -63,7 +63,7 @@ cargo install metrocity
 ### Arch Linux (AUR)
 
 ```bash
-paru -S metrocity # soon ig :(
+paru -S metrocity
 ```
 
 ## Setup
