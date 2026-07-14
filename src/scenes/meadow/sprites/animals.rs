@@ -13,7 +13,6 @@ const CAPY_IDLE: &[u8] = include_bytes!("../../../../assets/meadow/capybara/idle
 const CAPY_WALK: &[u8] = include_bytes!("../../../../assets/meadow/capybara/walk.png");
 const CAPY_ASLEEP: &[u8] = include_bytes!("../../../../assets/meadow/capybara/asleep.png");
 const SLOTH_IDLE: &[u8] = include_bytes!("../../../../assets/meadow/sloth/idle.png");
-const SLOTH_WALK: &[u8] = include_bytes!("../../../../assets/meadow/sloth/walk.png");
 const SLOTH_ASLEEP: &[u8] = include_bytes!("../../../../assets/meadow/sloth/asleep.png");
 const SLOTH_EAT: &[u8] = include_bytes!("../../../../assets/meadow/sloth/eat.png");
 const BADGER_IDLE: &[u8] = include_bytes!("../../../../assets/meadow/badger/idle.png");
@@ -78,7 +77,7 @@ impl Critter {
     #[allow(clippy::too_many_arguments)]
     fn new(
         idle_png: &[u8],
-        walk_png: &[u8],
+        walk_png: Option<&[u8]>,
         asleep_png: &[u8],
         eat_png: Option<&[u8]>,
         base: u32,
@@ -89,7 +88,11 @@ impl Critter {
         durations: (f64, f64, f64),
         start: State,
     ) -> Self {
-        let walk = sprite::load_strip(walk_png, FRAME_W);
+        // The sloth never walks (it idles, eats, then dozes), so it has no walk
+        // strip; the wanderers do.
+        let walk = walk_png
+            .map(|p| sprite::load_strip(p, FRAME_W))
+            .unwrap_or_default();
         let walk_flip = walk.iter().map(Sprite::flipped_h).collect();
         Self {
             asleep: sprite::load_strip(asleep_png, FRAME_W),
@@ -233,7 +236,7 @@ impl Animals {
             // Capybara: unbothered, ambles a little.
             capy: Critter::new(
                 CAPY_IDLE,
-                CAPY_WALK,
+                Some(CAPY_WALK),
                 CAPY_ASLEEP,
                 None,
                 CAPY_BASE,
@@ -248,7 +251,7 @@ impl Animals {
             // for the hunny pot.
             sloth: Critter::new(
                 SLOTH_IDLE,
-                SLOTH_WALK,
+                None,
                 SLOTH_ASLEEP,
                 Some(SLOTH_EAT),
                 SLOTH_BASE,
@@ -262,7 +265,7 @@ impl Animals {
             // Honey badger: restless, patrols the widest range.
             badger: Critter::new(
                 BADGER_IDLE,
-                BADGER_WALK,
+                Some(BADGER_WALK),
                 BADGER_ASLEEP,
                 None,
                 BADGER_BASE,
