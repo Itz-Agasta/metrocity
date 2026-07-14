@@ -1,6 +1,6 @@
 [package]
 name = "metrocity"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 rust-version = "1.75.0"
 description = "A terminal screensaver with animated pixel-art scenes that activate on idle"
