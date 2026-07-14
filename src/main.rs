@@ -127,6 +127,7 @@ fn run_screensaver(cli: &Cli) -> Result<(), Box<dyn std::error::Error>> {
 
     let mut scene: Box<dyn scene::Scene> = match scene_name {
         "cafe" => Box::new(scenes::cafe::CafeScene::new()),
+        "meadow" => Box::new(scenes::meadow::MeadowScene::new()),
         _ => {
             let weather = match config.appearance.weather.to_lowercase().as_str() {
                 "rain" => scenes::city::weather::Weather::Rain,

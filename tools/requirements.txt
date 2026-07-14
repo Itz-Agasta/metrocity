@@ -1,0 +1,4 @@
+# Python dependencies for gen_meadow_sprites.py (the meadow sprite generator).
+# Only needed to regenerate assets/meadow/*.png; the committed PNGs are enough
+# to build and run metrocity.
+Pillow>=10.0
