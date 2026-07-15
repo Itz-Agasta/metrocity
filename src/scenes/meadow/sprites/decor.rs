@@ -70,6 +70,21 @@ fn bees() -> Vec<Bee> {
         .collect()
 }
 
+/// Atmospheric perspective for the distant windmill: pull every pixel toward
+/// the horizon haze tone so it reads as far away instead of popping forward
+/// with the same contrast as the near animals.
+fn hazed(mut s: Sprite) -> Sprite {
+    const HAZE: [u8; 3] = [176, 196, 184];
+    for px in s.rgba.chunks_exact_mut(4) {
+        if px[3] > 0 {
+            for (c, h) in px[..3].iter_mut().zip(HAZE) {
+                *c = (f32::from(*c) + (f32::from(h) - f32::from(*c)) * 0.32) as u8;
+            }
+        }
+    }
+    s
+}
+
 pub struct Decor {
     hive: Sprite,
     bee: Sprite,
@@ -91,7 +106,10 @@ impl Decor {
             bee: sprite::load_strip(BEE, FRAME_W).swap_remove(0),
             hunny: sprite::from_png_bytes(HUNNY),
             book: sprite::from_png_bytes(BOOK),
-            windmill: sprite::load_strip(WINDMILL, WINDMILL_FRAME_W),
+            windmill: sprite::load_strip(WINDMILL, WINDMILL_FRAME_W)
+                .into_iter()
+                .map(hazed)
+                .collect(),
             bees: bees(),
             transmitted: false,
             placed: false,
