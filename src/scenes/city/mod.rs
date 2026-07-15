@@ -8,7 +8,7 @@ pub mod weather;
 use rand::prelude::*;
 use ratatui::buffer::Buffer;
 use ratatui::layout::Rect;
-use ratatui::style::Color;
+use ratatui::style::{Color, Style};
 use ratatui::widgets::Widget;
 
 use crate::scene::Scene;
@@ -139,14 +139,11 @@ impl CityScene {
 
     fn render_background(&self, area: Rect, buf: &mut Buffer) {
         let bg_color = self.theme.building_base_colors[0];
-        for y in area.top()..area.bottom() {
-            for x in area.left()..area.right() {
-                buf.cell_mut((x, y))
-                    .unwrap()
-                    .set_symbol(" ")
-                    .set_bg(bg_color);
-            }
-        }
+        // Terminal::draw resets the back buffer to blank cells before handing it
+        // to the scene. Only the background color needs changing here. Avoiding
+        // a redundant symbol assignment for every cell is significant for large
+        // terminals and keeps symbol processing out of this full-screen pass.
+        buf.set_style(area, Style::default().bg(bg_color));
     }
 
     fn render_stars(&self, area: Rect, buf: &mut Buffer) {
@@ -845,9 +842,14 @@ impl Scene for CityScene {
     }
 
     fn update(&mut self, dt: f64) {
-        let _ = dt; // time-based updates not needed — frame-based
         let area = Rect::new(0, 0, self.width, self.height);
-        self.update_inner(area);
+        // The original simulation was tuned for 30 updates per second. Keep
+        // that motion speed when the renderer runs at a lower frame rate by
+        // advancing multiple cheap simulation steps per rendered frame.
+        let steps = (dt * 30.0).round().clamp(1.0, 3.0) as usize;
+        for _ in 0..steps {
+            self.update_inner(area);
+        }
     }
 
     fn draw(&self, area: Rect, buf: &mut Buffer) {
