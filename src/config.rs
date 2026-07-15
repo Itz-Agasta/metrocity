@@ -34,7 +34,7 @@ pub struct EngineConfig {
 impl Default for EngineConfig {
     fn default() -> Self {
         Self {
-            fps: 30,
+            fps: 15,
             scene: String::from("cafe"),
             cycle_seconds: 0,
             shuffle: false,

@@ -139,7 +139,7 @@ Config file: `~/.config/metrocity/config.toml`. Generate it with `metrocity conf
 
 ```toml
 [engine]
-fps = 30
+fps = 15
 scene = "cafe"  # cafe or city
 
 [appearance]

@@ -31,9 +31,9 @@ struct Cli {
     #[arg(short, long)]
     weather: Option<String>,
 
-    /// Target frame rate
-    #[arg(long, default_value_t = 30)]
-    fps: u32,
+    /// Override the configured target frame rate
+    #[arg(long)]
+    fps: Option<u32>,
 
     /// Seconds per scene (0 = no cycling, v1 has one scene)
     #[arg(short, long, default_value_t = 0)]
@@ -118,7 +118,9 @@ fn run_screensaver(cli: &Cli) -> Result<(), Box<dyn std::error::Error>> {
     if let Some(ref weather) = cli.weather {
         config.appearance.weather = weather.clone();
     }
-    config.engine.fps = cli.fps;
+    if let Some(fps) = cli.fps {
+        config.engine.fps = fps;
+    }
 
     let theme = crate::theme::Theme::from_str(&config.appearance.theme);
 
