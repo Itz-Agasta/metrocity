@@ -53,11 +53,27 @@ fn sunflower(buf: &mut Buffer, bx: u16, base: u16, h: u16, t: f64, phase: f32, b
     // Heavy heads nod slowly; the sway grows toward the top of the stem.
     let sway = ((t as f32) * 1.2 + phase).sin() * 2.2;
     let stem_x = |frac: f32| f32::from(bx) + sway * frac;
+    // Walk up the stalk, bridging each row to the previous column so the curve
+    // stays a connected stem instead of leaving diagonal gaps as it sways.
+    let mut prev: Option<u16> = None;
     for r in 0..h {
         let x = stem_x(f32::from(r) / f32::from(h.max(1)));
-        if x >= 0.0 {
-            paint::fill(buf, x as u16, base.saturating_sub(r), STEM);
+        if x < 0.0 {
+            // Off-screen: forget prev so re-entry doesn't bridge a stale span.
+            prev = None;
+            continue;
         }
+        let xc = x as u16;
+        let row = base.saturating_sub(r);
+        let (a, b) = match prev {
+            Some(p) if p <= xc => (p, xc),
+            Some(p) => (xc, p),
+            None => (xc, xc),
+        };
+        for xx in a..=b {
+            paint::fill(buf, xx, row, STEM);
+        }
+        prev = Some(xc);
     }
     // Broad leaves alternating up the stem (skip any that fall off a short stem).
     for &(frac, dir) in &[(0.34f32, 1i32), (0.54, -1), (0.72, 1)] {

@@ -35,8 +35,14 @@ fn puff(buf: &mut Buffer, l: &Layout, x0: i64, cy: u16, cw: u16) {
             continue;
         }
         let x = x as u16;
+        // Lit from above: bright bumps on top, a softly shaded base row.
         let edge = dx == 0 || dx == cw - 1;
-        paint::fill(buf, x, cy, if edge { CLOUD_SHADE } else { CLOUD });
+        let base = if edge {
+            CLOUD_SHADE
+        } else {
+            paint::mix(CLOUD, CLOUD_SHADE, 0.55)
+        };
+        paint::fill(buf, x, cy, base);
         // Upper bumps, inset from the ends so the top reads as rounded.
         if dx >= 2 && dx + 2 < cw {
             paint::fill(buf, x, cy.saturating_sub(1), CLOUD);

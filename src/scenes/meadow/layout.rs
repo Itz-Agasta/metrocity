@@ -63,8 +63,10 @@ impl Layout {
 
         let animal_rows = 5;
 
-        // Sun in the upper right of the sky.
-        let sun = Rect::new(pw(80), 2, 6, 3);
+        // Sun in the upper right of the sky, offset from the windmill's
+        // column so the two don't stack in one vertical line. Wide enough
+        // that the disc and its glow halo read as round, not a yellow block.
+        let sun = Rect::new(pw(73), 2, 8, 4);
 
         // Tree on the left: trunk drops to the grass, canopy centered over it.
         let trunk = Rect::new(
@@ -96,7 +98,7 @@ impl Layout {
         let sunflowers = Rect::new(pw(11), sf_base.saturating_sub(sf_h), 11, sf_h);
 
         // Distant windmill sprite on the right, its base near the horizon.
-        let windmill = Rect::new(pw(80), horizon_y.saturating_sub(6), 12, 7);
+        let windmill = Rect::new(pw(84), horizon_y.saturating_sub(5), 10, 6);
 
         // The three friends, grouped center: badger, sloth, capybara.
         let sloth = Slot {
@@ -152,16 +154,6 @@ impl Layout {
     /// Top row where a ground-standing animal sprite is placed.
     pub fn animal_row(&self) -> u16 {
         self.ground_y.saturating_sub(self.animal_rows)
-    }
-
-    /// Whether cell (x, y) lies inside the leafy canopy ellipse.
-    pub fn canopy_contains(&self, x: u16, y: u16) -> bool {
-        if self.canopy_rx == 0 || self.canopy_ry == 0 {
-            return false;
-        }
-        let dx = (f32::from(x) - f32::from(self.canopy_cx)) / f32::from(self.canopy_rx);
-        let dy = (f32::from(y) - f32::from(self.canopy_cy)) / f32::from(self.canopy_ry);
-        dx * dx + dy * dy <= 1.0
     }
 
     /// Rightmost leaf column at the given row, if the canopy reaches that row.

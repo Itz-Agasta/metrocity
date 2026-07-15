@@ -31,9 +31,17 @@ pub fn draw(buf: &mut Buffer, l: &Layout) {
     let y0 = l.canopy_cy.saturating_sub(l.canopy_ry);
     let y1 = (l.canopy_cy + l.canopy_ry).min(l.h.saturating_sub(1));
     let x1 = (l.canopy_cx + l.canopy_rx).min(l.w.saturating_sub(1));
+    let (cx, cy) = (f32::from(l.canopy_cx), f32::from(l.canopy_cy));
+    let (rx, ry) = (f32::from(l.canopy_rx), f32::from(l.canopy_ry));
     for y in y0..=y1 {
         for x in 0..=x1 {
-            if l.canopy_contains(x, y) {
+            // Ragged leaf edge: jitter the ellipse boundary per cell so the
+            // silhouette (especially the bottom) breaks up instead of reading
+            // as a razor-clean curve. Interior cells always fill.
+            let dx = (f32::from(x) - cx) / rx;
+            let dy = (f32::from(y) - cy) / ry;
+            let n = (paint::hash(u32::from(x), u32::from(y).wrapping_mul(7)) % 256) as f32 / 256.0;
+            if dx * dx + dy * dy <= 1.0 + (n - 0.5) * 0.22 {
                 let h = paint::hash(u32::from(x), u32::from(y)) % 10;
                 let leaf = if h < 2 {
                     LEAF_LIGHT

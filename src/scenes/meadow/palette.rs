@@ -5,7 +5,8 @@ use ratatui::style::Color;
 // Sky
 pub const SKY_TOP: Color = Color::Rgb(126, 176, 214);
 pub const SKY_HORIZON: Color = Color::Rgb(206, 222, 214);
-pub const SUN: Color = Color::Rgb(247, 224, 148);
+pub const SUN: Color = Color::Rgb(252, 202, 78);
+pub const SUN_GLOW: Color = Color::Rgb(250, 228, 156);
 pub const CLOUD: Color = Color::Rgb(245, 248, 246);
 pub const CLOUD_SHADE: Color = Color::Rgb(214, 224, 224);
 
@@ -30,6 +31,11 @@ pub const PETAL_ORANGE_DARK: Color = Color::Rgb(198, 92, 34);
 pub const FLOWER_CENTER: Color = Color::Rgb(96, 58, 32);
 
 pub const HILL: Color = Color::Rgb(140, 166, 104);
+pub const HILL_FAR: Color = Color::Rgb(172, 194, 178);
+
+// Tiny wildflowers dotted through the grass
+pub const WILDFLOWER: Color = Color::Rgb(224, 228, 204);
+pub const WILDFLOWER_GOLD: Color = Color::Rgb(222, 196, 116);
 
 // Picnic blanket
 pub const BLANKET_RED: Color = Color::Rgb(192, 84, 72);
