@@ -7,7 +7,7 @@
 //! - `palette`     hardcoded colors
 //! - `paint`       low-level cell helpers
 //! - `background`  sky / hills / grass base layers
-//! - `components`  one file per ratatui-drawn element (tree, cabin, ...)
+//! - `components`  one file per ratatui-drawn element (tree, clouds, ...)
 //! - `sprites`     Kitty sprite layer (animals, hive, bee, hunny, book)
 
 use std::io::{self, Write};
@@ -78,6 +78,12 @@ impl Scene for MeadowScene {
         };
 
         background::render(buf, l, self.t);
+        let spots = self
+            .sprites
+            .as_ref()
+            .map(|s| s.animal_spots())
+            .unwrap_or_default();
+        components::shadows::draw(buf, l, &spots);
         components::clouds::draw(buf, l, self.t);
         components::birds::draw(buf, l, self.t);
         components::tree::draw(buf, l);

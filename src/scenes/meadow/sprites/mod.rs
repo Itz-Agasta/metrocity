@@ -38,6 +38,11 @@ impl SpriteLayer {
         self.decor.set_time(self.t);
     }
 
+    /// (center col, half width) of each animal, for the shadow pools.
+    pub fn animal_spots(&self) -> [(u16, u16); 3] {
+        self.animals.spots()
+    }
+
     pub fn post_draw(&mut self, out: &mut dyn Write) -> io::Result<()> {
         if self.layout.w == 0 {
             return Ok(());

@@ -295,6 +295,12 @@ impl Animals {
         self.badger.update(dt);
     }
 
+    /// (center col, half width) of each critter, for the shadow pools.
+    pub fn spots(&self) -> [(u16, u16); 3] {
+        [&self.badger, &self.sloth, &self.capy]
+            .map(|c| (c.x as u16 + c.cols / 2, c.cols / 2))
+    }
+
     pub fn post_draw(&mut self, out: &mut dyn Write, l: &Layout) -> io::Result<()> {
         if l.w == 0 || l.ground_y < l.animal_rows {
             return Ok(());

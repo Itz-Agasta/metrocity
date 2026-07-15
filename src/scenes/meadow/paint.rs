@@ -21,6 +21,17 @@ pub fn glyph_over(buf: &mut Buffer, x: u16, y: u16, ch: char, fg: Color) {
     }
 }
 
+/// Darkens the cell's current background toward a deep grass green: a soft
+/// shadow that works over whatever is already painted there.
+pub fn shade(buf: &mut Buffer, x: u16, y: u16, amount: f32) {
+    if x < buf.area.width && y < buf.area.height {
+        if let Some(cell) = buf.cell_mut((x, y)) {
+            let c = mix(cell.bg, Color::Rgb(34, 46, 30), amount);
+            cell.set_char(' ').set_fg(c).set_bg(c);
+        }
+    }
+}
+
 /// Linear blend between two RGB colors.
 pub fn mix(a: Color, b: Color, t: f32) -> Color {
     let (ar, ag, ab) = rgb(a);
@@ -33,7 +44,7 @@ pub fn mix(a: Color, b: Color, t: f32) -> Color {
     )
 }
 
-pub fn rgb(c: Color) -> (u8, u8, u8) {
+fn rgb(c: Color) -> (u8, u8, u8) {
     match c {
         Color::Rgb(r, g, b) => (r, g, b),
         _ => (0, 0, 0),
