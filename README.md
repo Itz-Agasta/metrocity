@@ -38,7 +38,7 @@ Built with [Rust](https://www.rust-lang.org/), [Ratatui](https://ratatui.rs/), [
 
 | Scene  | Description |
 |--------|-------------|
-| `city` | Cyberpunk skyline: neon buildings, flying traffic, rain, your distro logo |
+| `city` | Cyberpunk skyline: neon buildings, flying traffic, rain, your distro logo - ported from [metropolis](https://github.com/5c0/metropolis) |
 | `cafe` | Cozy cat cafe: two animated pixel cats, neon sign, rain on the window, pastries |
 
 The cafe scene layers pixel-art sprites (cats, plants, pastries, neon sign) on top of the character grid. Sprites need a terminal that supports the Kitty graphics protocol - kitty, WezTerm, or Ghostty. On other terminals the scene still renders, just without the sprites.
