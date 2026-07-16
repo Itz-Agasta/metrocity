@@ -11,7 +11,14 @@ pub fn draw(buf: &mut Buffer, l: &Layout, animals: &[(u16, u16)]) {
     // Tree: a wide pool around the trunk base, nudged left since the sun sits
     // in the upper right.
     let tx = i32::from(l.trunk.x) + i32::from(l.trunk.width) / 2;
-    pool(buf, tx - 3, i32::from(l.ground_y) + 1, f32::from(l.canopy_rx) * 0.55, 2.4, 0.16);
+    pool(
+        buf,
+        tx - 3,
+        i32::from(l.ground_y) + 1,
+        f32::from(l.canopy_rx) * 0.55,
+        2.4,
+        0.16,
+    );
     // Sunflower patch: covers both clusters at their base row.
     let s = l.sunflowers;
     pool(buf, i32::from(s.x), i32::from(s.bottom()), 11.0, 1.4, 0.14);
@@ -23,10 +30,24 @@ pub fn draw(buf: &mut Buffer, l: &Layout, animals: &[(u16, u16)]) {
     // Windmill: far away, so the pool is small and faint. Wider than the
     // sprite so it peeks out at the sides of the base.
     let m = l.windmill;
-    pool(buf, i32::from(m.x) + i32::from(m.width) / 2, i32::from(m.bottom()), 6.0, 1.0, 0.10);
+    pool(
+        buf,
+        i32::from(m.x) + i32::from(m.width) / 2,
+        i32::from(m.bottom()),
+        6.0,
+        1.0,
+        0.10,
+    );
     // The friends, at their feet; follows them as they wander.
     for &(cx, hw) in animals {
-        pool(buf, i32::from(cx), i32::from(l.ground_y), f32::from(hw) + 1.5, 1.3, 0.15);
+        pool(
+            buf,
+            i32::from(cx),
+            i32::from(l.ground_y),
+            f32::from(hw) + 1.5,
+            1.3,
+            0.15,
+        );
     }
 }
 

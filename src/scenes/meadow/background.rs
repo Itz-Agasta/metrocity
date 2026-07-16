@@ -45,7 +45,12 @@ fn sky(buf: &mut Buffer, l: &Layout) {
                 paint::fill(buf, x, y, SUN);
             } else if d <= 1.7 {
                 // Glow ring: fade the warm halo into the sky behind it.
-                paint::fill(buf, x, y, paint::mix(SUN_GLOW, sky_color(l, x, y), (d - 1.0) / 0.7));
+                paint::fill(
+                    buf,
+                    x,
+                    y,
+                    paint::mix(SUN_GLOW, sky_color(l, x, y), (d - 1.0) / 0.7),
+                );
             }
         }
     }
@@ -132,7 +137,11 @@ fn grass(buf: &mut Buffer, l: &Layout, t: f64) {
                 };
                 paint::glyph_over(buf, x, y, ch, GRASS_BLADE);
             } else if h % 89 == 0 {
-                let color = if h % 3 == 0 { WILDFLOWER_GOLD } else { WILDFLOWER };
+                let color = if h % 3 == 0 {
+                    WILDFLOWER_GOLD
+                } else {
+                    WILDFLOWER
+                };
                 paint::glyph_over(buf, x, y, '·', color);
             }
         }
