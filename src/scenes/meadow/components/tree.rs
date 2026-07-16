@@ -11,11 +11,13 @@ pub fn draw(buf: &mut Buffer, l: &Layout) {
     if l.canopy_rx == 0 || l.canopy_ry == 0 {
         return;
     }
-    // Trunk first, with a shaded right edge, so the canopy overlaps its top.
+    // Trunk first, with a shaded left edge (the sun sits off to the right, so
+    // the far side from the light falls in shadow), so the canopy overlaps its
+    // top.
     let tr = l.trunk;
     for y in tr.top()..tr.bottom().min(l.h) {
         for x in tr.left()..tr.right() {
-            let shade = x == tr.right() - 1;
+            let shade = x == tr.left();
             paint::fill(buf, x, y, if shade { TRUNK_DARK } else { TRUNK });
         }
     }
