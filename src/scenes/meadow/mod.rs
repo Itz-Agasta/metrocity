@@ -78,10 +78,13 @@ impl Scene for MeadowScene {
         };
 
         background::render(buf, l, self.t);
-        let spots = self
+        // Vec, not the array: shadows::draw keys off an empty list to skip the
+        // sprite-only shadows, and a [(u16, u16); 3] default is three zeroed
+        // entries rather than nothing.
+        let spots: Vec<(u16, u16)> = self
             .sprites
             .as_ref()
-            .map(|s| s.animal_spots())
+            .map(|s| s.animal_spots().to_vec())
             .unwrap_or_default();
         components::shadows::draw(buf, l, &spots);
         components::clouds::draw(buf, l, self.t);
