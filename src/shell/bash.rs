@@ -1,5 +1,10 @@
 pub const SNIPPET: &str = r#"# metrocity - terminal screensaver (bash integration)
 # https://github.com/Itz-Agasta/metrocity
+#
+# Usage (add to ~/.bashrc):
+#   export METROCITY_TIMEOUT=120  # seconds of idle before activation (default: 120)
+#   export METROCITY_SCENE=cafe   # optional: pin a scene - cafe, city or meadow (default: random)
+#   eval "$(metrocity shell-init bash)"
 
 _metrocity_cancel() {
   if [[ -n "${_METROCITY_PID}" ]]; then
@@ -14,8 +19,8 @@ _metrocity_schedule() {
   (
     sleep "${timeout}"
     [[ "$(ps -o stat= -p $$)" == *"+"* ]] || exit 0
-    # Pick scene from METROCITY_SCENE if set, otherwise metrocity uses its
-    # configured default (cafe).
+    # Pin the scene from METROCITY_SCENE if set, otherwise metrocity picks
+    # a random scene each launch.
     command -v metrocity >/dev/null 2>&1 || exit 0
     if [[ -n "${METROCITY_SCENE}" ]]; then
       metrocity --scene "${METROCITY_SCENE}"

@@ -20,13 +20,14 @@
 
 https://github.com/user-attachments/assets/e3bf0c0c-ef1e-4b0d-b89d-a4db6d16ea74
 
-Metrocity activates when your shell has been idle, takes over the terminal with an animated scene (a cyberpunk city skyline or a cozy cat cafe), and exits instantly on any keypress - like a screensaver, but for your terminal. Flashes your distro logo. Goes hard in your Hyprland setup.
+Metrocity activates when your shell has been idle, takes over the terminal with a randomly picked animated scene (a cyberpunk city skyline, a cozy cat cafe, or a sunny meadow), and exits instantly on any keypress - like a screensaver, but for your terminal. Flashes your distro logo. Goes hard in your Hyprland setup.
 
 Built with [Rust](https://www.rust-lang.org/), [Ratatui](https://ratatui.rs/), [Crossterm](https://github.com/crossterm-rs/crossterm), and the [Kitty graphics protocol](https://sw.kovidgoyal.net/kitty/graphics-protocol/).
 
 ## Features
 
 - **Animated scenes** with weather, traffic, wandering cats, and atmosphere
+- **Random scene** on every activation - or pin your favourite
 - **Pixel-art sprites** rendered over the character grid via the Kitty graphics protocol
 - **Distro detection** - renders your distro's logo on a building
 - **6 built-in color themes** plus custom themes via TOML
@@ -75,7 +76,7 @@ Add to your `~/.zshrc`:
 
 ```bash
 export METROCITY_TIMEOUT=120  # seconds of idle before activation (default: 120)
-export METROCITY_SCENE=cafe   # scene to launch: cafe (default), city or meadow
+export METROCITY_SCENE=cafe   # optional: pin a scene - cafe, city or meadow (default: random)
 eval "$(metrocity shell-init zsh)"
 ```
 
@@ -99,7 +100,7 @@ set -gx METROCITY_SCENE cafe
 metrocity shell-init fish | source
 ```
 
-`METROCITY_SCENE` is optional. If unset, metrocity uses the default scene (`cafe`). Set it to `city` for the cyberpunk skyline or `meadow` for the cozy meadow.
+`METROCITY_SCENE` is optional. If unset, metrocity picks a random scene every time it activates. Set it to pin one: `cafe` for the cat cafe, `city` for the cyberpunk skyline, or `meadow` for the cozy meadow.
 
 
 > **Add these lines to your shell config file, not just the current terminal.**
@@ -115,8 +116,8 @@ Just run `metrocity` - it takes over the terminal, press any key to exit.
 ## Usage
 
 ```
-metrocity                              # Start immediately
-metrocity --scene cafe                 # Lock to a specific scene (city, cafe, meadow)
+metrocity                              # Start immediately (random scene)
+metrocity --scene cafe                 # Pin a specific scene (city, cafe, meadow)
 metrocity --theme cyberpunk            # Override color theme
 metrocity --weather rain               # Force weather mode (rain, snow, clear)
 metrocity --fps 60                     # Target frame rate
@@ -141,7 +142,7 @@ Config file: `~/.config/metrocity/config.toml`. Generate it with `metrocity conf
 ```toml
 [engine]
 fps = 30
-scene = "cafe"  # cafe, city or meadow
+scene = "random"  # random (default), cafe, city or meadow
 
 [appearance]
 theme = "default"

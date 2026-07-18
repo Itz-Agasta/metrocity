@@ -1,5 +1,10 @@
 pub const SNIPPET: &str = r#"# metrocity - terminal screensaver (fish integration)
 # https://github.com/Itz-Agasta/metrocity
+#
+# Usage (add to ~/.config/fish/config.fish):
+#   set -gx METROCITY_TIMEOUT 120  # seconds of idle before activation (default: 120)
+#   set -gx METROCITY_SCENE cafe   # optional: pin a scene - cafe, city or meadow (default: random)
+#   metrocity shell-init fish | source
 
 # Cancel any pending activation timer. Runs before every command (fish_preexec)
 # so metrocity never fires while you are actually using the shell.
@@ -22,8 +27,8 @@ function _metrocity_schedule --on-event fish_prompt
         set timeout $METROCITY_TIMEOUT
     end
 
-    # Pick scene from METROCITY_SCENE if set, otherwise metrocity uses its
-    # configured default (cafe).
+    # Pin the scene from METROCITY_SCENE if set, otherwise metrocity picks
+    # a random scene each launch.
     set -l launch metrocity
     if set -q METROCITY_SCENE; and test -n "$METROCITY_SCENE"
         set launch metrocity --scene $METROCITY_SCENE

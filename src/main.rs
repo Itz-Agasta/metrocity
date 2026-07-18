@@ -12,14 +12,14 @@ use clap::{Parser, Subcommand};
 #[derive(Parser)]
 #[command(
     name = "metrocity",
-    about = "A terminal screensaver — cyberpunk skyline that activates on idle",
+    about = "A terminal screensaver - animated pixel-art scenes that activate on idle",
     version
 )]
 struct Cli {
     #[command(subcommand)]
     command: Option<Commands>,
 
-    /// Lock to a specific scene
+    /// Pin a specific scene (default: a random one each launch)
     #[arg(short, long)]
     scene: Option<String>,
 
@@ -71,6 +71,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 for name in scenes::names() {
                     println!("  {name}");
                 }
+                println!("  random      - one of the above, picked at launch (default)");
             }
             "themes" => {
                 println!("  cyberpunk   — neon-drenched cityscape");
@@ -122,8 +123,24 @@ fn run_screensaver(cli: &Cli) -> Result<(), Box<dyn std::error::Error>> {
 
     let theme = crate::theme::Theme::from_str(&config.appearance.theme);
 
-    // Resolve scene from --scene flag or config
-    let scene_name = cli.scene.as_deref().unwrap_or(&config.engine.scene);
+    // Resolve scene from --scene flag or config; "random" picks one each launch
+    let requested = cli.scene.as_deref().unwrap_or(&config.engine.scene);
+    let scene_name = match requested {
+        "random" => {
+            use rand::seq::SliceRandom;
+            *scenes::names()
+                .choose(&mut rand::thread_rng())
+                .expect("at least one scene is always registered")
+        }
+        name if scenes::names().contains(&name) => name,
+        other => {
+            eprintln!(
+                "Unknown scene: {other}. Available: {}, random.",
+                scenes::names().join(", ")
+            );
+            std::process::exit(1);
+        }
+    };
 
     let mut scene: Box<dyn scene::Scene> = match scene_name {
         "cafe" => Box::new(scenes::cafe::CafeScene::new()),
