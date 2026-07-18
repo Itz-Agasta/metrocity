@@ -40,7 +40,7 @@ Built with [Rust](https://www.rust-lang.org/), [Ratatui](https://ratatui.rs/), [
 |--------|-------------|
 | `city` | Cyberpunk skyline: neon buildings, flying traffic, rain, your distro logo - ported from [metropolis](https://github.com/5c0/metropolis) |
 | `cafe` | Cozy cat cafe: two animated pixel cats, neon sign, rain on the window, pastries |
-| `meadow` | Meadow: a capybara, a sloth and a honey badger lounging under a big tree, with a beehive, bees, swaying sunflowers, drifting leaves and a pot of hunny |
+| `meadow` | Meadow: a capybara, a sloth and a honey badger lounging under a big tree, with a beehive, bees, swaying sunflowers, drifting leaves and a pot of hunny. Designed by [@sean-d](https://github.com/sean-d). |
 
 The cafe and meadow scenes layer pixel-art sprites on top of the character grid. Sprites need a terminal that supports the Kitty graphics protocol - kitty, WezTerm, or Ghostty. On other terminals the scene still renders, just without the sprites.
 
