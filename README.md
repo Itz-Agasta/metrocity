@@ -40,8 +40,9 @@ Built with [Rust](https://www.rust-lang.org/), [Ratatui](https://ratatui.rs/), [
 |--------|-------------|
 | `city` | Cyberpunk skyline: neon buildings, flying traffic, rain, your distro logo - ported from [metropolis](https://github.com/5c0/metropolis) |
 | `cafe` | Cozy cat cafe: two animated pixel cats, neon sign, rain on the window, pastries |
+| `meadow` | Meadow: a capybara, a sloth and a honey badger lounging under a big tree, with a beehive, bees, swaying sunflowers, drifting leaves and a pot of hunny |
 
-The cafe scene layers pixel-art sprites (cats, plants, pastries, neon sign) on top of the character grid. Sprites need a terminal that supports the Kitty graphics protocol - kitty, WezTerm, or Ghostty. On other terminals the scene still renders, just without the sprites.
+The cafe and meadow scenes layer pixel-art sprites on top of the character grid. Sprites need a terminal that supports the Kitty graphics protocol - kitty, WezTerm, or Ghostty. On other terminals the scene still renders, just without the sprites.
 
 ## Install
 
@@ -74,7 +75,7 @@ Add to your `~/.zshrc`:
 
 ```bash
 export METROCITY_TIMEOUT=120  # seconds of idle before activation (default: 120)
-export METROCITY_SCENE=cafe   # scene to launch: cafe (default) or city
+export METROCITY_SCENE=cafe   # scene to launch: cafe (default), city or meadow
 eval "$(metrocity shell-init zsh)"
 ```
 
@@ -98,7 +99,7 @@ set -gx METROCITY_SCENE cafe
 metrocity shell-init fish | source
 ```
 
-`METROCITY_SCENE` is optional. If unset, metrocity uses the default scene (`cafe`). Set it to `city` for the cyberpunk skyline.
+`METROCITY_SCENE` is optional. If unset, metrocity uses the default scene (`cafe`). Set it to `city` for the cyberpunk skyline or `meadow` for the cozy meadow.
 
 
 > **Add these lines to your shell config file, not just the current terminal.**
@@ -115,7 +116,7 @@ Just run `metrocity` - it takes over the terminal, press any key to exit.
 
 ```
 metrocity                              # Start immediately
-metrocity --scene cafe                 # Lock to a specific scene (city, cafe)
+metrocity --scene cafe                 # Lock to a specific scene (city, cafe, meadow)
 metrocity --theme cyberpunk            # Override color theme
 metrocity --weather rain               # Force weather mode (rain, snow, clear)
 metrocity --fps 60                     # Target frame rate
@@ -140,7 +141,7 @@ Config file: `~/.config/metrocity/config.toml`. Generate it with `metrocity conf
 ```toml
 [engine]
 fps = 30
-scene = "cafe"  # cafe or city
+scene = "cafe"  # cafe, city or meadow
 
 [appearance]
 theme = "default"
