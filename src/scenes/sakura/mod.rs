@@ -1,14 +1,13 @@
-//! Sakura scene: a night lakeside with a big procedural cherry-blossom tree
-//! (ported from csakura), a city skyline and pagoda across the water, and
-//! petals drifting on the wind. Character-grid scenery; the Kitty sprites
-//! are the fox and the stone lanterns.
+//! Sakura scene: a night lakeside with a big procedural cherry-blossom tree,
+//! a city skyline and pagoda across the water, and petals drifting on the wind.
+//! Character-grid scenery; the Kitty sprites are the fox and the stone lanterns.
 //!
 //! Module map:
 //! - `layout`      every element's position, shared by draw and post_draw
 //! - `palette`     hardcoded night colors
 //! - `paint`       low-level cell helpers
-//! - `background`  sky / stars / moon / Fuji / far hills
-//! - `tree`        csakura port: canopy, branches, trunk, petal carpet
+//! - `background`  sky / stars / moon / far hills
+//! - `tree`        canopy, branches, trunk, petal carpet
 //! - `petals`      falling-petal particles + wind
 //! - `components`  one file per ratatui-drawn element (lake, pagoda, ...)
 //! - `sprites`     Kitty sprite layer (fox, stone lanterns)
