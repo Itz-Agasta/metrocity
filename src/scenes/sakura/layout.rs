@@ -29,10 +29,14 @@ pub struct Layout {
     /// Trunk base column of the sakura tree.
     pub tree_cx: u16,
 
-    // Red panda (sprite cells)
-    pub panda_cols: u16,
-    pub panda_rows: u16,
-    pub panda_range: (u16, u16), // walk range (min col, max col)
+    // Fox (sprite cells)
+    pub fox_cols: u16,
+    pub fox_rows: u16,
+    pub fox_range: (u16, u16), // walk range (min col, max col)
+
+    // Stone lanterns (sprite cell boxes)
+    pub lantern_left: Rect,
+    pub lantern_right: Rect,
 }
 
 impl Layout {
@@ -53,8 +57,25 @@ impl Layout {
         );
 
         let tree_cx = pct(84);
-        let panda_cols = 9;
-        let panda_rows = 4;
+        let fox_cols = 13;
+        let fox_rows = 6;
+
+        // Lanterns: square-ish cell boxes so the square frames keep their
+        // proportions. Left one is foreground (bigger, low near the water),
+        // right one stands at the foot of the tree.
+        let bank_h = h.saturating_sub(ground_y);
+        let lantern_left = Rect::new(
+            pct(8),
+            (ground_y + bank_h * 2 / 3).saturating_sub(4),
+            8,
+            4,
+        );
+        let lantern_right = Rect::new(
+            tree_cx.saturating_sub(13),
+            (ground_y + 5).saturating_sub(4),
+            7,
+            4,
+        );
 
         Self {
             w,
@@ -66,9 +87,11 @@ impl Layout {
             torii,
             lantern_x: pct(46),
             tree_cx,
-            panda_cols,
-            panda_rows,
-            panda_range: (pct(52), pct(76)),
+            fox_cols,
+            fox_rows,
+            fox_range: (pct(48), pct(64)),
+            lantern_left,
+            lantern_right,
         }
     }
 }

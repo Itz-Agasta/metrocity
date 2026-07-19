@@ -1,7 +1,7 @@
 //! Sakura scene: a night lakeside with a big procedural cherry-blossom tree
 //! (ported from csakura), Mt Fuji and a pagoda across the water, a torii
-//! gate, and petals drifting on the wind. Character-grid scenery; the only
-//! Kitty sprite is the red panda.
+//! gate, and petals drifting on the wind. Character-grid scenery; the Kitty
+//! sprites are the fox and the stone lanterns.
 //!
 //! Module map:
 //! - `layout`      every element's position, shared by draw and post_draw
@@ -11,7 +11,7 @@
 //! - `tree`        csakura port: canopy, branches, trunk, petal carpet
 //! - `petals`      falling-petal particles + wind
 //! - `components`  one file per ratatui-drawn element (lake, pagoda, ...)
-//! - `sprites`     Kitty sprite layer (red panda)
+//! - `sprites`     Kitty sprite layer (fox, stone lanterns)
 
 use std::io::{self, Write};
 
