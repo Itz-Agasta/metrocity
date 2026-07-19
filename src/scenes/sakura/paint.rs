@@ -12,6 +12,16 @@ pub fn fill(buf: &mut Buffer, x: u16, y: u16, color: Color) {
     }
 }
 
+/// Splits one cell into two vertical halves: '▀' with fg on top, bg below.
+/// Doubles the vertical resolution for shapes drawn in character cells.
+pub fn half_fill(buf: &mut Buffer, x: u16, y: u16, top: Color, bottom: Color) {
+    if x < buf.area.width && y < buf.area.height {
+        if let Some(cell) = buf.cell_mut((x, y)) {
+            cell.set_char('▀').set_fg(top).set_bg(bottom);
+        }
+    }
+}
+
 /// Sets a char with fg, keeping whatever bg the cell already has.
 pub fn glyph_over(buf: &mut Buffer, x: u16, y: u16, ch: char, fg: Color) {
     if x < buf.area.width && y < buf.area.height {

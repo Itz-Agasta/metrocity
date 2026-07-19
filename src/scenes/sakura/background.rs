@@ -50,27 +50,59 @@ fn stars(buf: &mut Buffer, l: &Layout, t: f64) {
 
 fn moon(buf: &mut Buffer, l: &Layout) {
     let m = l.moon;
-    let cx = f32::from(m.left()) + f32::from(m.width) / 2.0 - 0.5;
-    let cy = f32::from(m.top()) + f32::from(m.height) / 2.0 - 0.5;
+    let cx = f32::from(m.left()) + f32::from(m.width) / 2.0;
+    // Work in half-rows ('▀' sub-cells): a terminal cell is ~2x taller than
+    // wide, so half-cells are roughly square and the disc stays round.
+    let cyh = f32::from(m.top()) * 2.0 + f32::from(m.height);
     let rx = f32::from(m.width) / 2.0;
-    let ry = f32::from(m.height) / 2.0;
-    for y in m.top().saturating_sub(1)..m.bottom() + 1 {
-        for x in m.left().saturating_sub(1)..m.right() + 1 {
-            let dx = (f32::from(x) - cx) / rx;
-            let dy = (f32::from(y) - cy) / ry;
-            let d = dx * dx + dy * dy;
-            // Crescent: inside the disc but outside a second disc shifted
-            // toward the upper-right, which bites the dark side out.
-            let bx = dx - 0.55;
-            let by = dy - 0.25;
-            let bite = bx * bx + by * by;
-            if d <= 1.0 && bite > 0.55 {
-                paint::fill(buf, x, y, MOON);
-            } else if d <= 1.8 && bite > 0.55 {
-                // Soft glow ring fading into the sky.
-                let f = (d - 1.0) / 0.8;
-                paint::fill(buf, x, y, paint::mix(MOON, sky_color(l, x, y), 0.55 + f * 0.45));
+    let ryh = f32::from(m.height);
+
+    // Crescent field: inside the disc but outside a second disc shifted
+    // toward the upper-right, which bites the dark side out.
+    let field = |dx: f32, dy: f32| -> (bool, f32) {
+        let d = dx * dx + dy * dy;
+        let bx = dx - 0.55;
+        let by = dy - 0.25;
+        let bite = bx * bx + by * by;
+        let inside = d <= 1.0 && bite > 0.55;
+        let glow = if bite > 0.55 {
+            (1.0 - (d - 1.0) / 0.9).clamp(0.0, 1.0)
+        } else {
+            0.0
+        };
+        (inside, glow * glow * 0.30)
+    };
+
+    for y in m.top().saturating_sub(2)..(m.bottom() + 2).min(l.horizon_y) {
+        for x in m.left().saturating_sub(2)..m.right() + 2 {
+            let mut shade = [0.0f32; 2];
+            for (half, s) in shade.iter_mut().enumerate() {
+                let yh = f32::from(y) * 2.0 + half as f32;
+                // 2x2 supersample per half-cell softens the pixel-stepped edge.
+                let mut cov = 0.0;
+                for (ox, oy) in [(0.25, 0.25), (0.75, 0.25), (0.25, 0.75), (0.75, 0.75)] {
+                    let dx = (f32::from(x) + ox - cx) / rx;
+                    let dy = (yh + oy - cyh) / ryh;
+                    if field(dx, dy).0 {
+                        cov += 0.25;
+                    }
+                }
+                let dx = (f32::from(x) + 0.5 - cx) / rx;
+                let dy = (yh + 0.5 - cyh) / ryh;
+                let (_, g) = field(dx, dy);
+                *s = cov + (1.0 - cov) * g;
             }
+            if shade[0] < 0.01 && shade[1] < 0.01 {
+                continue; // pure sky: leave stars alone
+            }
+            let sky = sky_color(l, x, y);
+            paint::half_fill(
+                buf,
+                x,
+                y,
+                paint::mix(sky, MOON, shade[0]),
+                paint::mix(sky, MOON, shade[1]),
+            );
         }
     }
 }
