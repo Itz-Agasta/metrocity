@@ -37,9 +37,6 @@ pub const TRUNK_M: Color = Color::Rgb(0x4e, 0x32, 0x38);
 pub const TRUNK_L: Color = Color::Rgb(0x70, 0x4c, 0x50);
 
 // Structures
-pub const TORII_RED: Color = Color::Rgb(0xc7, 0x3e, 0x3a);
-pub const TORII_DARK: Color = Color::Rgb(0x2e, 0x22, 0x30);
-pub const LANTERN_STONE: Color = Color::Rgb(0x6e, 0x64, 0x80);
 pub const LANTERN_GLOW: Color = Color::Rgb(0xff, 0xb3, 0x47);
 
 // Far-shore city skyline

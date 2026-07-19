@@ -1,4 +1,4 @@
-//! Foreground grass bank the tree, torii and lantern stand on.
+//! Foreground grass bank the tree, fox and lanterns stand on.
 
 use ratatui::buffer::Buffer;
 

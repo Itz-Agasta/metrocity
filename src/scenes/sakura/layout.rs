@@ -24,8 +24,6 @@ pub struct Layout {
     pub pagoda_x: u16,
 
     // Right bank
-    pub torii: Rect,
-    pub lantern_x: u16,
     /// Trunk base column of the sakura tree.
     pub tree_cx: u16,
 
@@ -47,15 +45,6 @@ impl Layout {
 
         let moon = Rect::new(pct(19), 1, 8, 4);
 
-        let torii_w = 12.min(w / 9).max(7);
-        let torii_h = 10.min(ground_y.saturating_sub(horizon_y) + 6);
-        let torii = Rect::new(
-            w.saturating_sub(torii_w + 2),
-            (ground_y + 2).saturating_sub(torii_h),
-            torii_w,
-            torii_h,
-        );
-
         let tree_cx = pct(84);
         let fox_cols = 13;
         let fox_rows = 6;
@@ -64,12 +53,7 @@ impl Layout {
         // proportions. Left one is foreground (bigger, low near the water),
         // right one stands at the foot of the tree.
         let bank_h = h.saturating_sub(ground_y);
-        let lantern_left = Rect::new(
-            pct(8),
-            (ground_y + bank_h * 2 / 3).saturating_sub(4),
-            8,
-            4,
-        );
+        let lantern_left = Rect::new(pct(8), (ground_y + bank_h * 2 / 3).saturating_sub(4), 8, 4);
         let lantern_right = Rect::new(
             tree_cx.saturating_sub(13),
             (ground_y + 5).saturating_sub(4),
@@ -84,8 +68,6 @@ impl Layout {
             ground_y,
             moon,
             pagoda_x: pct(27),
-            torii,
-            lantern_x: pct(46),
             tree_cx,
             fox_cols,
             fox_rows,

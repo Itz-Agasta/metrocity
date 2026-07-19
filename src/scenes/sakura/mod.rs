@@ -1,7 +1,7 @@
 //! Sakura scene: a night lakeside with a big procedural cherry-blossom tree
-//! (ported from csakura), Mt Fuji and a pagoda across the water, a torii
-//! gate, and petals drifting on the wind. Character-grid scenery; the Kitty
-//! sprites are the fox and the stone lanterns.
+//! (ported from csakura), a city skyline and pagoda across the water, and
+//! petals drifting on the wind. Character-grid scenery; the Kitty sprites
+//! are the fox and the stone lanterns.
 //!
 //! Module map:
 //! - `layout`      every element's position, shared by draw and post_draw
