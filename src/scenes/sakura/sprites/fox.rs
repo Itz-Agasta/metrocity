@@ -12,6 +12,9 @@ const WALK: &[u8] = include_bytes!("../../../../assets/sakura/fox/walk.png");
 const ASLEEP: &[u8] = include_bytes!("../../../../assets/sakura/fox/asleep.png");
 
 const FRAME_W: u16 = 128;
+/// The walk strip uses wider frames: a trotting fox is longer than tall,
+/// so it gets a wider cell box at the same body scale as sit/asleep.
+const WALK_FRAME_W: u16 = 176;
 const WALK_SPEED: f64 = 2.5; // cells per second
 
 // Kitty image id ranges (one image per animation frame)
@@ -49,7 +52,7 @@ pub struct Fox {
 
 impl Fox {
     pub fn new() -> Self {
-        let walk = sprite::load_strip(WALK, FRAME_W);
+        let walk = sprite::load_strip(WALK, WALK_FRAME_W);
         let walk_flip = walk.iter().map(Sprite::flipped_h).collect();
         Self {
             asleep: sprite::load_strip(ASLEEP, FRAME_W),
@@ -82,7 +85,7 @@ impl Fox {
 
         // Contemplative personality: long moon-gazes, naps, short strolls.
         let (duration, frame_dt, next) = match self.state {
-            State::Gazing => (22.0, 0.6, State::Walking),
+            State::Gazing => (22.0, 0.9, State::Walking),
             State::Walking => (6.0, 0.22, State::Asleep),
             State::Asleep => (26.0, 0.8, State::Gazing),
         };
@@ -149,14 +152,21 @@ impl Fox {
         let row = l.ground_y;
         let (frames, id_base) = self.frames();
         let id = id_base + (self.frame % frames.len()) as u32;
-        let col = self.x as u16;
+        // The walk box is wider (same body scale, longer pose); keep the body
+        // centered on x so the fox doesn't jump sideways on state changes.
+        let (cols, col) = if self.state == State::Walking {
+            let cols = (u32::from(l.fox_cols) * u32::from(WALK_FRAME_W) / u32::from(FRAME_W)) as u16;
+            (cols, (self.x as u16).saturating_sub((cols - l.fox_cols) / 2))
+        } else {
+            (l.fox_cols, self.x as u16)
+        };
         if self.last != Some((id, col, row)) {
             if let Some((old_id, _, _)) = self.last {
                 if old_id != id {
                     kitty::delete_placement(out, old_id)?;
                 }
             }
-            kitty::place(out, id, col, row, l.fox_cols, l.fox_rows)?;
+            kitty::place(out, id, col, row, cols, l.fox_rows)?;
             self.last = Some((id, col, row));
         }
         Ok(())
