@@ -51,8 +51,7 @@ impl Tree {
         self.w = l.w;
         self.h = l.h;
         self.cells.clear();
-        self.cells
-            .resize(usize::from(l.w) * usize::from(l.h), None);
+        self.cells.resize(usize::from(l.w) * usize::from(l.h), None);
         self.sources.clear();
 
         if l.w < 20 || l.h < 12 {
@@ -135,7 +134,11 @@ impl Tree {
             if blobs.len() >= MAX_BLOBS {
                 break;
             }
-            let (bl, bu) = if is_tip { (0.050, 0.080) } else { (0.035, 0.055) };
+            let (bl, bu) = if is_tip {
+                (0.050, 0.080)
+            } else {
+                (0.035, 0.055)
+            };
             let rx = w * frange(rng, bl, bu);
             blobs.push(Blob {
                 x: nx + frange(rng, -1.5, 1.5),
@@ -199,9 +202,7 @@ impl Tree {
             let t = f64::from(i) / f64::from(steps);
             let y = base_y - t * hgt;
             // Lean left harder toward the fork, with a gnarled wiggle.
-            let x = base_x
-                + (fork_x - base_x) * t.powf(1.35)
-                + (t * 7.0).sin() * wobble * t;
+            let x = base_x + (fork_x - base_x) * t.powf(1.35) + (t * 7.0).sin() * wobble * t;
 
             // Taper upward, flare at the roots.
             let w = maxw * (1.0 - 0.50 * t) * (1.0 + 0.7 * (-t * 9.0).exp()) + 0.5;
@@ -298,7 +299,16 @@ impl Tree {
                 1 => angle - spread,
                 _ => angle + frange(rng, -0.25, 0.25),
             };
-            self.branch(x, y, na, len * frange(rng, 0.55, 0.75), depth + 1, bbox, tips, rng);
+            self.branch(
+                x,
+                y,
+                na,
+                len * frange(rng, 0.55, 0.75),
+                depth + 1,
+                bbox,
+                tips,
+                rng,
+            );
         }
     }
 

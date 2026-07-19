@@ -73,8 +73,8 @@ fn moon_path(buf: &mut Buffer, l: &Layout, t: f64) {
         let jitter = (f64::from((hrow / 13) % 7) - 3.0) * f64::from(depth);
         let len = ((2.5 - depth * 1.5) as i64 + i64::from((hrow / 31) % 2)).max(1);
         let start = (cx + sway + jitter - len as f64 / 2.0).round() as i64;
-        let glow = (0.42 - depth * 0.26)
-            * (0.8 + 0.2 * ((t * 2.0 + f64::from(y) * 1.3).sin() as f32));
+        let glow =
+            (0.42 - depth * 0.26) * (0.8 + 0.2 * ((t * 2.0 + f64::from(y) * 1.3).sin() as f32));
         for i in 0..len {
             let x = start + i;
             if (0..i64::from(l.w)).contains(&x) {

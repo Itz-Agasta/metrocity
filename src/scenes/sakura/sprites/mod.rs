@@ -29,7 +29,11 @@ impl SpriteLayer {
     pub fn init(&mut self, l: &Layout) {
         self.layout = *l;
         self.fox.init(l);
-        for (lantern, rect) in self.lanterns.iter_mut().zip([l.lantern_left, l.lantern_right]) {
+        for (lantern, rect) in self
+            .lanterns
+            .iter_mut()
+            .zip([l.lantern_left, l.lantern_right])
+        {
             lantern.init(rect.x, rect.y, rect.width, rect.height);
         }
     }

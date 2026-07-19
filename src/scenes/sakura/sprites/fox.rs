@@ -155,8 +155,12 @@ impl Fox {
         // The walk box is wider (same body scale, longer pose); keep the body
         // centered on x so the fox doesn't jump sideways on state changes.
         let (cols, col) = if self.state == State::Walking {
-            let cols = (u32::from(l.fox_cols) * u32::from(WALK_FRAME_W) / u32::from(FRAME_W)) as u16;
-            (cols, (self.x as u16).saturating_sub((cols - l.fox_cols) / 2))
+            let cols =
+                (u32::from(l.fox_cols) * u32::from(WALK_FRAME_W) / u32::from(FRAME_W)) as u16;
+            (
+                cols,
+                (self.x as u16).saturating_sub((cols - l.fox_cols) / 2),
+            )
         } else {
             (l.fox_cols, self.x as u16)
         };

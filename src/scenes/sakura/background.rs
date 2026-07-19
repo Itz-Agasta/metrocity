@@ -43,7 +43,13 @@ fn stars(buf: &mut Buffer, l: &Layout, t: f64) {
             let phase = f64::from(h % 628) / 100.0;
             let b = 0.35 + 0.65 * (0.5 + 0.5 * (t * 1.7 + phase).sin());
             let glyph = if h % 5 == 0 { '+' } else { '·' };
-            paint::glyph_over(buf, x, y, glyph, paint::mix(sky_color(l, x, y), STAR, b as f32));
+            paint::glyph_over(
+                buf,
+                x,
+                y,
+                glyph,
+                paint::mix(sky_color(l, x, y), STAR, b as f32),
+            );
         }
     }
 }

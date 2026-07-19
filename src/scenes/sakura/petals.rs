@@ -16,14 +16,14 @@ const GLYPHS: [char; 5] = ['❀', '✿', '*', '·', '∘'];
 struct Petal {
     x: f64,
     y: f64,
-    vy: f64,               // fall speed, cells per frame at 20fps
+    vy: f64, // fall speed, cells per frame at 20fps
     phase: f64,
     freq: f64,
-    amp: f64,              // horizontal sway
+    amp: f64, // horizontal sway
     glyph: char,
     color: Color,
-    land_y: f64,           // bank row this petal settles on
-    rest: f64,             // seconds left on the ground, <0 = falling
+    land_y: f64, // bank row this petal settles on
+    rest: f64,   // seconds left on the ground, <0 = falling
     active: bool,
 }
 
