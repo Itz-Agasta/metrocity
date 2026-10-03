@@ -1,0 +1,30 @@
+Cargo.lock
+  h_4b7d6207874de7 442
+Cargo.toml
+  h_4b7d6207874de7 3
+README.md
+  h_4b7d6207874de7 23,30,79,103,119-120,145
+aur/PKGBUILD
+  h_4b7d6207874de7 3
+src/config.rs
+  h_4b7d6207874de7 38
+src/main.rs
+  h_4b7d6207874de7 15,22,74,126-143
+src/shell/bash.rs
+  h_4b7d6207874de7 3-7,22-23
+src/shell/fish.rs
+  h_4b7d6207874de7 3-7,30-31
+src/shell/zsh.rs
+  h_4b7d6207874de7 3-7,15-16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "0c07fcca911e6f48eddf7198763ec1d8f7c2f121",
+  "prompts": {},
+  "humans": {
+    "h_4b7d6207874de7": {
+      "author": "Itz-Agasta <rupamgolui69@gmail.com>"
+    }
+  }
+}
