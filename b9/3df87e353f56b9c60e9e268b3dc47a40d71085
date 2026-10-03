@@ -1,0 +1,24 @@
+.claude/skills/generate2dsprite/SKILL.md
+  h_4b7d6207874de7 1-263
+.claude/skills/generate2dsprite/agents/openai.yaml
+  h_4b7d6207874de7 1-4
+.claude/skills/generate2dsprite/references/modes.md
+  h_4b7d6207874de7 1-124
+.claude/skills/generate2dsprite/references/prompt-rules.md
+  h_4b7d6207874de7 1-319
+.claude/skills/generate2dsprite/scripts/generate2dsprite.py
+  h_4b7d6207874de7 1-911
+.claude/skills/generate2dsprite/scripts/make_layout_guide.py
+  h_4b7d6207874de7 1-108
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b93df87e353f56b9c60e9e268b3dc47a40d71085",
+  "prompts": {},
+  "humans": {
+    "h_4b7d6207874de7": {
+      "author": "Itz-Agasta <rupamgolui69@gmail.com>"
+    }
+  }
+}
