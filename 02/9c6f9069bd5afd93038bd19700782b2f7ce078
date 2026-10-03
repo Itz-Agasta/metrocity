@@ -1,0 +1,24 @@
+src/scenes/meadow/background.rs
+  h_4b7d6207874de7 5,17-24,28,31-33,35-44,46-48,55-57,62-73,75-80,87,89,91-93,98-101,105-119,121-122,134-136
+src/scenes/meadow/components/clouds.rs
+  h_4b7d6207874de7 38,40-45
+src/scenes/meadow/components/sunflowers.rs
+  h_4b7d6207874de7 56-58,61-74,76
+src/scenes/meadow/components/tree.rs
+  h_4b7d6207874de7 34-35,38-44
+src/scenes/meadow/layout.rs
+  h_4b7d6207874de7 66-69,101
+src/scenes/meadow/palette.rs
+  h_4b7d6207874de7 8-9,34-38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "029c6f9069bd5afd93038bd19700782b2f7ce078",
+  "prompts": {},
+  "humans": {
+    "h_4b7d6207874de7": {
+      "author": "Itz-Agasta <rupamgolui69@gmail.com>"
+    }
+  }
+}
