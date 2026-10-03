@@ -1,0 +1,14 @@
+src/sprite.rs
+  h_4b7d6207874de7 11-44
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "71e87cf8b495f28e41d47adc1b717ffc88bc3a1a",
+  "prompts": {},
+  "humans": {
+    "h_4b7d6207874de7": {
+      "author": "Itz-Agasta <rupamgolui69@gmail.com>"
+    }
+  }
+}
