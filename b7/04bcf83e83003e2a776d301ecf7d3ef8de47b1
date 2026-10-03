@@ -1,0 +1,16 @@
+src/main.rs
+  h_4b7d6207874de7 130
+src/scenes/mod.rs
+  h_4b7d6207874de7 3,7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b704bcf83e83003e2a776d301ecf7d3ef8de47b1",
+  "prompts": {},
+  "humans": {
+    "h_4b7d6207874de7": {
+      "author": "Itz-Agasta <rupamgolui69@gmail.com>"
+    }
+  }
+}
