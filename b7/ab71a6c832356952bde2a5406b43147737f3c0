@@ -1,0 +1,16 @@
+Cargo.toml
+  h_4b7d6207874de7 11-12
+README.md
+  h_4b7d6207874de7 57-62
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b7ab71a6c832356952bde2a5406b43147737f3c0",
+  "prompts": {},
+  "humans": {
+    "h_4b7d6207874de7": {
+      "author": "Itz-Agasta <rupamgolui69@gmail.com>"
+    }
+  }
+}
