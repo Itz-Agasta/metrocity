@@ -1,0 +1,48 @@
+src/scenes/harbor/background.rs
+  s_addb31f9c3aecc::t_2a127b0f8fe309 1-91,93-155
+  s_addb31f9c3aecc::t_ac8db814268bad 92
+src/scenes/harbor/components/water.rs
+  s_addb31f9c3aecc::t_ac8db814268bad 8,70,73
+  s_addb31f9c3aecc::t_4670def3aa6077 1-7,9-69,71-72,74-78
+src/scenes/harbor/layout.rs
+  s_addb31f9c3aecc::t_aecd78ce7e1884 1-32
+src/main.rs
+  s_addb31f9c3aecc::t_f57374cdf59ca4 149
+src/scenes/mod.rs
+  s_addb31f9c3aecc::t_f57374cdf59ca4 3,9
+src/scenes/harbor/THIRD-PARTY-NOTICES.md
+  s_addb31f9c3aecc::t_1d76044448ae14 1-207
+src/scenes/harbor/components/mod.rs
+  s_addb31f9c3aecc::t_f9f798c1a066f0 1-3
+src/scenes/harbor/paint.rs
+  s_addb31f9c3aecc::t_aecd78ce7e1884 1-72
+README.md
+  s_addb31f9c3aecc::t_4f2a970ba03bf7 46
+  s_addb31f9c3aecc::t_d47a08b7686923 23
+src/scenes/harbor/palette.rs
+  s_addb31f9c3aecc::t_aecd78ce7e1884 1-30
+src/scenes/harbor/components/skyline.rs
+  s_addb31f9c3aecc::t_ac8db814268bad 107-111
+  s_addb31f9c3aecc::t_f9f798c1a066f0 1-82,85,89-106,112-114
+  s_addb31f9c3aecc::t_ebd97efa093abe 83-84,86-88
+src/scenes/harbor/mod.rs
+  s_addb31f9c3aecc::t_f57374cdf59ca4 1-83
+src/scenes/harbor/components/train.rs
+  s_addb31f9c3aecc::t_4670def3aa6077 1-56
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "02011ccf056cbd9be5b7dab16f01367eafc71c47",
+  "prompts": {},
+  "sessions": {
+    "s_addb31f9c3aecc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4418c700-5ff2-4e08-afcb-bde78bb8285e",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Itz-Agasta <rupamgolui69@gmail.com>"
+    }
+  }
+}
