@@ -1,0 +1,16 @@
+src/scenes/sakura/sprites/fox.rs
+  h_4b7d6207874de7 1-164
+src/scenes/sakura/sprites/lantern.rs
+  h_4b7d6207874de7 1-82
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5274b96991240cb16cdd61ab3d3468e995484b26",
+  "prompts": {},
+  "humans": {
+    "h_4b7d6207874de7": {
+      "author": "Itz-Agasta <rupamgolui69@gmail.com>"
+    }
+  }
+}
