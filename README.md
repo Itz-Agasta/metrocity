@@ -20,7 +20,7 @@
 
 https://github.com/user-attachments/assets/e3bf0c0c-ef1e-4b0d-b89d-a4db6d16ea74
 
-Metrocity activates when your shell has been idle, takes over the terminal with a randomly picked animated scene (a cyberpunk city skyline, a cozy cat cafe, a sunny meadow, or a moonlit sakura lakeside), and exits instantly on any keypress - like a screensaver, but for your terminal. Flashes your distro logo. Goes hard in your Hyprland setup.
+Metrocity activates when your shell has been idle, takes over the terminal with a randomly picked animated scene (a cyberpunk city skyline, a cozy cat cafe, a sunny meadow, a moonlit sakura lakeside, or a night harbor with a passing train), and exits instantly on any keypress - like a screensaver, but for your terminal. Flashes your distro logo. Goes hard in your Hyprland setup.
 
 Built with [Rust](https://www.rust-lang.org/), [Ratatui](https://ratatui.rs/), [Crossterm](https://github.com/crossterm-rs/crossterm), and the [Kitty graphics protocol](https://sw.kovidgoyal.net/kitty/graphics-protocol/).
 
@@ -43,6 +43,7 @@ Built with [Rust](https://www.rust-lang.org/), [Ratatui](https://ratatui.rs/), [
 | `cafe` | Cozy cat cafe: two animated pixel cats, neon sign, rain on the window, pastries |
 | `meadow` | Meadow: a capybara, a sloth and a honey badger lounging under a big tree, with a beehive, bees, swaying sunflowers, drifting leaves and a pot of hunny. Designed by [@sean-d](https://github.com/sean-d). |
 | `sakura` | Moonlit lakeside: a cherry tree shedding petals over the water, a city skyline and pagoda on the far shore, and a pixel fox that gazes at the moon, strolls the bank and naps between two glowing stone lanterns |
+| `harbor` | Night harbor: a skyline whose windows switch on and off, a pixel moon, a train crossing an elevated line, and the whole city mirrored in the water |
 
 The cafe, meadow and sakura scenes layer pixel-art sprites on top of the character grid. Sprites need a terminal that supports the Kitty graphics protocol - kitty, WezTerm, or Ghostty. On other terminals the scene still renders, just without the sprites.
 
