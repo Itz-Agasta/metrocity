@@ -1,0 +1,14 @@
+src/scenes/cafe/background.rs
+  h_4b7d6207874de7 1-155
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "29bb6fa589b4a114bc5ce97a528a74fe924b5f2e",
+  "prompts": {},
+  "humans": {
+    "h_4b7d6207874de7": {
+      "author": "Itz-Agasta <rupamgolui69@gmail.com>"
+    }
+  }
+}
