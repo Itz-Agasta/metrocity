@@ -1,0 +1,18 @@
+README.md
+  h_4b7d6207874de7 33,91-100,105-108,125
+src/shell/fish.rs
+  h_4b7d6207874de7 1-41
+src/shell/mod.rs
+  h_4b7d6207874de7 2,9,11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "9225c457709134c7a5a383c8d535960b182d3810",
+  "prompts": {},
+  "humans": {
+    "h_4b7d6207874de7": {
+      "author": "Itz-Agasta <rupamgolui69@gmail.com>"
+    }
+  }
+}
