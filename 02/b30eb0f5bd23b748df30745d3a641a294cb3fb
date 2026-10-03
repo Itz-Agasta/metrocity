@@ -1,0 +1,23 @@
+aur/PKGBUILD
+  s_addb31f9c3aecc::t_f36f0bc33983d9 3
+Cargo.toml
+  s_addb31f9c3aecc::t_f36f0bc33983d9 3
+Cargo.lock
+  s_addb31f9c3aecc::t_44153bd2ee932c 442
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "02b30eb0f5bd23b748df30745d3a641a294cb3fb",
+  "prompts": {},
+  "sessions": {
+    "s_addb31f9c3aecc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4418c700-5ff2-4e08-afcb-bde78bb8285e",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Itz-Agasta <rupamgolui69@gmail.com>"
+    }
+  }
+}
