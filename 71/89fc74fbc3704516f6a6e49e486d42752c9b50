@@ -1,0 +1,24 @@
+src/scenes/meadow/components/mod.rs
+  h_4b7d6207874de7 5
+src/scenes/meadow/components/shadows.rs
+  h_4b7d6207874de7 1-55
+src/scenes/meadow/mod.rs
+  h_4b7d6207874de7 10,81-86
+src/scenes/meadow/paint.rs
+  h_4b7d6207874de7 24-34,47
+src/scenes/meadow/sprites/animals.rs
+  h_4b7d6207874de7 298-303
+src/scenes/meadow/sprites/mod.rs
+  h_4b7d6207874de7 41-45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "7189fc74fbc3704516f6a6e49e486d42752c9b50",
+  "prompts": {},
+  "humans": {
+    "h_4b7d6207874de7": {
+      "author": "Itz-Agasta <rupamgolui69@gmail.com>"
+    }
+  }
+}
