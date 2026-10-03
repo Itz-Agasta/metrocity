@@ -1,0 +1,24 @@
+src/scenes/sakura/background.rs
+  h_4b7d6207874de7 46-52
+src/scenes/sakura/components/lake.rs
+  h_4b7d6207874de7 76-77
+src/scenes/sakura/petals.rs
+  h_4b7d6207874de7 19,22,25-26
+src/scenes/sakura/sprites/fox.rs
+  h_4b7d6207874de7 158-163
+src/scenes/sakura/sprites/mod.rs
+  h_4b7d6207874de7 32-36
+src/scenes/sakura/tree.rs
+  h_4b7d6207874de7 54,137-141,205,302-311
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ec301198bc7b1321219e50284d3e84bce11fe449",
+  "prompts": {},
+  "humans": {
+    "h_4b7d6207874de7": {
+      "author": "Itz-Agasta <rupamgolui69@gmail.com>"
+    }
+  }
+}
