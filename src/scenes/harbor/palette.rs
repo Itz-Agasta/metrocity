@@ -28,3 +28,13 @@ pub const HEADLIGHT: Color = Color::Rgb(255, 240, 180);
 // Water
 pub const WATER_DEEP: Color = Color::Rgb(4, 8, 22);
 pub const RIPPLE: Color = Color::Rgb(120, 140, 200);
+
+// Lighthouse
+pub const ROCK: Color = Color::Rgb(26, 28, 38);
+pub const STONE: Color = Color::Rgb(70, 72, 86);
+pub const FOAM: Color = Color::Rgb(220, 230, 245);
+pub const TOWER_WHITE: Color = Color::Rgb(150, 150, 165);
+pub const TOWER_RED: Color = Color::Rgb(125, 42, 52);
+pub const TOWER_DARK: Color = Color::Rgb(30, 32, 44);
+pub const LAMP: Color = Color::Rgb(255, 232, 160);
+pub const BEAM: Color = Color::Rgb(255, 240, 190);

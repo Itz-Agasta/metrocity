@@ -1,7 +1,7 @@
 //! Harbor scene: a city at night over water. A moon, twinkling stars,
 //! windows that go on and off, a train crossing an elevated line, a tower
-//! beacon, a shooting star now and then, and the whole skyline reflected
-//! in the water. Pure character-grid, no sprites.
+//! beacon, a shooting star now and then, a lighthouse sweeping its beam,
+//! and the whole skyline reflected in the water. Pure character-grid, no sprites.
 //! Ported from limoni's city backdrop (see THIRD-PARTY-NOTICES.md).
 //!
 //! Module map:
@@ -9,7 +9,7 @@
 //! - `palette`     hardcoded night colors
 //! - `paint`       low-level cell helpers
 //! - `background`  sky, moon, stars, shooting stars
-//! - `components`  skyline, train, water
+//! - `components`  skyline, train, water, lighthouse
 
 use rand::rngs::StdRng;
 use rand::{thread_rng, Rng, SeedableRng};
@@ -37,6 +37,7 @@ pub struct HarborScene {
     t: f64,
     /// Per-launch seed deciding which windows are lit and when stars shoot.
     seed: u32,
+    moon_phase: background::MoonPhase,
     sky: background::Sky,
     skyline: components::skyline::Skyline,
 }
@@ -47,6 +48,7 @@ impl HarborScene {
             layout: Layout::default(),
             t: 0.0,
             seed: thread_rng().gen(),
+            moon_phase: background::MoonPhase::random(&mut thread_rng()),
             sky: background::Sky::default(),
             skyline: components::skyline::Skyline::default(),
         }
@@ -75,9 +77,10 @@ impl Scene for HarborScene {
             return;
         }
         let frame = (self.t * f64::from(FPS)) as u32;
-        self.sky.draw(buf, l, frame, self.seed);
+        self.sky.draw(buf, l, frame, self.seed, &self.moon_phase);
         self.skyline.draw(buf, l, frame, self.seed);
         components::train::draw(buf, l, frame);
         components::water::draw(buf, l, frame);
+        components::lighthouse::draw(buf, l, self.t as f32);
     }
 }

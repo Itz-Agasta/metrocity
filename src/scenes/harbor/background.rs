@@ -26,6 +26,34 @@ struct Star {
     offset: u32,
 }
 
+/// Which part of the moon is lit, picked once per launch.
+pub struct MoonPhase {
+    /// Terminator position: -1 full, 0 half, toward 1 a thin crescent.
+    k: f32,
+    /// Lit side: 1.0 right (waxing), -1.0 left (waning).
+    side: f32,
+}
+
+impl MoonPhase {
+    pub fn random(rng: &mut impl Rng) -> Self {
+        const PHASES: [f32; 5] = [-1.0, -1.0, -0.5, 0.0, 0.55];
+        Self {
+            k: PHASES[rng.gen_range(0..PHASES.len())],
+            side: if rng.gen() { 1.0 } else { -1.0 },
+        }
+    }
+
+    /// Whether a point on the disc (in moon radii) is in sunlight.
+    fn lit(&self, mx: f32, my: f32) -> bool {
+        mx * self.side > self.k * (1.0 - my * my).max(0.0).sqrt()
+    }
+
+    /// Share of the disc that is lit, 0..1.
+    fn fraction(&self) -> f32 {
+        (1.0 - self.k) / 2.0
+    }
+}
+
 #[derive(Default)]
 pub struct Sky {
     stars: Vec<Star>,
@@ -45,8 +73,8 @@ impl Sky {
             .collect();
     }
 
-    pub fn draw(&self, buf: &mut Buffer, l: &Layout, frame: u32, seed: u32) {
-        sky(buf, l);
+    pub fn draw(&self, buf: &mut Buffer, l: &Layout, frame: u32, seed: u32, phase: &MoonPhase) {
+        sky(buf, l, phase);
         for s in &self.stars {
             let (ch, color) = match (frame + s.offset) % s.period {
                 0..=2 => ('✦', STAR_BRIGHT),
@@ -56,7 +84,7 @@ impl Sky {
             paint::glyph(buf, s.x, s.y, ch, color);
         }
         shooting_star(buf, l, frame, seed);
-        moon(buf, l);
+        moon(buf, l, phase);
     }
 }
 
@@ -66,8 +94,9 @@ fn sky_at(l: &Layout, y: i32) -> Color {
     paint::mix(SKY_TOP, SKY_HORIZON, t * t)
 }
 
-fn sky(buf: &mut Buffer, l: &Layout) {
+fn sky(buf: &mut Buffer, l: &Layout, phase: &MoonPhase) {
     let halo = l.moon_r * 3.2;
+    let glow = 0.8 * (0.3 + 0.7 * phase.fraction());
     for y in 0..i32::from(l.horizon) {
         let base = sky_at(l, y);
         for x in 0..i32::from(l.w) {
@@ -76,7 +105,7 @@ fn sky(buf: &mut Buffer, l: &Layout) {
             let dy = y as f32 - l.moon_y;
             let d = (dx * dx + dy * dy).sqrt() / halo;
             let color = if d < 1.0 {
-                paint::mix(base, MOON_HALO, (1.0 - d) * (1.0 - d) * 0.8)
+                paint::mix(base, MOON_HALO, (1.0 - d) * (1.0 - d) * glow)
             } else {
                 base
             };
@@ -114,8 +143,9 @@ fn shooting_star(buf: &mut Buffer, l: &Layout, frame: u32, seed: u32) {
     }
 }
 
-/// The moon at twice the vertical resolution with half blocks.
-fn moon(buf: &mut Buffer, l: &Layout) {
+/// The moon at twice the vertical resolution with half blocks. The unlit
+/// part still shows faintly against the sky (earthshine).
+fn moon(buf: &mut Buffer, l: &Layout, phase: &MoonPhase) {
     let r = l.moon_r;
     let at = |x: i32, y: i32, sub: f32| {
         (
@@ -131,7 +161,12 @@ fn moon(buf: &mut Buffer, l: &Layout) {
                 k -= 0.13;
             }
         }
-        paint::scale(MOON, k)
+        let lit = paint::scale(MOON, k);
+        if phase.lit(mx, my) {
+            lit
+        } else {
+            paint::mix(SKY_TOP, lit, 0.12)
+        }
     };
     let y0 = (l.moon_y - r - 1.0) as i32;
     let y1 = ((l.moon_y + r + 1.0) as i32).min(i32::from(l.horizon) - 1);

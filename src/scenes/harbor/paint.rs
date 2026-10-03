@@ -23,6 +23,14 @@ pub fn glyph(buf: &mut Buffer, x: i32, y: i32, ch: char, fg: Color) {
     }
 }
 
+/// Blends a cell's fg and bg toward `color`, keeping its glyph.
+pub fn tint(buf: &mut Buffer, x: i32, y: i32, color: Color, k: f32) {
+    if let Some(cell) = cell_mut(buf, x, y) {
+        let (fg, bg) = (mix(cell.fg, color, k), mix(cell.bg, color, k));
+        cell.set_fg(fg).set_bg(bg);
+    }
+}
+
 /// Background color of a cell (black when off screen).
 pub fn bg_at(buf: &Buffer, x: i32, y: i32) -> Color {
     if x < 0 || y < 0 || x >= buf.area.width as i32 || y >= buf.area.height as i32 {

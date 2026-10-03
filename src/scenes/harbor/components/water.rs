@@ -4,12 +4,12 @@
 use ratatui::buffer::Buffer;
 
 use crate::scenes::harbor::layout::Layout;
-use crate::scenes::harbor::paint;
 use crate::scenes::harbor::palette::*;
+use crate::scenes::harbor::{paint, FPS};
 
 pub fn draw(buf: &mut Buffer, l: &Layout, frame: u32) {
     let (w, h, horizon) = (i32::from(l.w), i32::from(l.h), i32::from(l.horizon));
-    reflection(buf, w, h, horizon);
+    reflection(buf, w, h, horizon, frame as f32 / FPS as f32);
     moon_path(buf, l, frame);
 
     // Ripples on fixed columns.
@@ -34,12 +34,16 @@ pub fn draw(buf: &mut Buffer, l: &Layout, frame: u32) {
     }
 }
 
-fn reflection(buf: &mut Buffer, w: i32, h: i32, horizon: i32) {
+/// The rows above the horizon mirrored into the water, each row swayed
+/// sideways by a slow wave that grows toward the viewer.
+fn reflection(buf: &mut Buffer, w: i32, h: i32, horizon: i32, t: f32) {
     for y in horizon..h {
         let src = (2 * horizon - 1 - y).max(0);
         let depth = (y - horizon + 1) as f32 / (h - horizon + 1) as f32;
+        let sway = ((t * 1.3 + y as f32 * 0.9).sin() * (0.4 + 1.6 * depth)).round() as i32;
         for x in 0..w {
-            let s = &buf[(x as u16, src as u16)];
+            let sx = (x + sway).clamp(0, w - 1);
+            let s = &buf[(sx as u16, src as u16)];
             let fg = paint::mix(s.fg, WATER_DEEP, 0.45 + 0.35 * depth);
             let bg = paint::mix(s.bg, WATER_DEEP, 0.5 + 0.4 * depth);
             let ch = match s.symbol().chars().next().unwrap_or(' ') {

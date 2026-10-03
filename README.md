@@ -43,7 +43,7 @@ Built with [Rust](https://www.rust-lang.org/), [Ratatui](https://ratatui.rs/), [
 | `cafe` | Cozy cat cafe: two animated pixel cats, neon sign, rain on the window, pastries |
 | `meadow` | Meadow: a capybara, a sloth and a honey badger lounging under a big tree, with a beehive, bees, swaying sunflowers, drifting leaves and a pot of hunny. Designed by [@sean-d](https://github.com/sean-d). |
 | `sakura` | Moonlit lakeside: a cherry tree shedding petals over the water, a city skyline and pagoda on the far shore, and a pixel fox that gazes at the moon, strolls the bank and naps between two glowing stone lanterns |
-| `harbor` | Night harbor: a skyline whose windows switch on and off, a pixel moon, a train crossing an elevated line, and the whole city mirrored in the water |
+| `harbor` | Night harbor: a skyline whose windows switch on and off, a pixel moon in a different phase each night, a train crossing an elevated line, a lighthouse sweeping its beam, and the whole city mirrored in the rippling water |
 
 The cafe, meadow and sakura scenes layer pixel-art sprites on top of the character grid. Sprites need a terminal that supports the Kitty graphics protocol - kitty, WezTerm, or Ghostty. On other terminals the scene still renders, just without the sprites.
 

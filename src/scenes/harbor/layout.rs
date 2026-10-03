@@ -12,6 +12,9 @@ pub struct Layout {
     pub moon_x: f32,
     pub moon_y: f32,
     pub moon_r: f32,
+    /// Lighthouse center column and lamp row.
+    pub lighthouse_x: i32,
+    pub lamp_y: i32,
 }
 
 impl Layout {
@@ -27,6 +30,8 @@ impl Layout {
             moon_x: f32::from(w) * 0.8,
             moon_y: f32::from(h) * 0.2,
             moon_r: (f32::from(h) / 9.0).max(2.0),
+            lighthouse_x: i32::from(w) * 12 / 100,
+            lamp_y: (i32::from(horizon) - i32::from(h) / 4).max(1),
         }
     }
 }
