@@ -1,0 +1,24 @@
+src/scenes/sakura/components/ground.rs
+  h_4b7d6207874de7 1-18
+src/scenes/sakura/components/lake.rs
+  h_4b7d6207874de7 1-122
+src/scenes/sakura/components/lantern.rs
+  h_4b7d6207874de7 1-43
+src/scenes/sakura/components/mod.rs
+  h_4b7d6207874de7 1-8
+src/scenes/sakura/components/skyline.rs
+  h_4b7d6207874de7 1-173
+src/scenes/sakura/components/torii.rs
+  h_4b7d6207874de7 1-50
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5d685868afa6d2c6d1a8c862135878d0f8f0c3bc",
+  "prompts": {},
+  "humans": {
+    "h_4b7d6207874de7": {
+      "author": "Itz-Agasta <rupamgolui69@gmail.com>"
+    }
+  }
+}
