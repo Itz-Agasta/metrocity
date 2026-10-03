@@ -1,0 +1,16 @@
+src/scenes/cafe/components/mod.rs
+  h_4b7d6207874de7 1
+src/scenes/cafe/mod.rs
+  h_4b7d6207874de7 1-42
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b3ae34abfd847e14c0e1590bdb750b9c40ad15db",
+  "prompts": {},
+  "humans": {
+    "h_4b7d6207874de7": {
+      "author": "Itz-Agasta <rupamgolui69@gmail.com>"
+    }
+  }
+}
