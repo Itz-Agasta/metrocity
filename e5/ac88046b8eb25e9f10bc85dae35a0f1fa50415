@@ -1,0 +1,18 @@
+src/shell/bash.rs
+  h_4b7d6207874de7 1-35
+src/shell/mod.rs
+  h_4b7d6207874de7 1-13
+src/shell/zsh.rs
+  h_4b7d6207874de7 1-25
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e5ac88046b8eb25e9f10bc85dae35a0f1fa50415",
+  "prompts": {},
+  "humans": {
+    "h_4b7d6207874de7": {
+      "author": "Itz-Agasta <rupamgolui69@gmail.com>"
+    }
+  }
+}
