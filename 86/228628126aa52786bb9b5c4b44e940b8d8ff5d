@@ -1,0 +1,26 @@
+src/config.rs
+  h_4b7d6207874de7 72
+src/kitty.rs
+  h_4b7d6207874de7 30-36,42-45,57-64
+src/main.rs
+  h_4b7d6207874de7 7
+src/scenes/city/buildings.rs
+  h_4b7d6207874de7 38-39
+src/scenes/city/logos.rs
+  h_4b7d6207874de7 75,108,139,174,215,244-245,249,260,303,337,344,358,428,435,519,607,637,667,697,727,743-755,770,799,827,855,885,928,948,955,962,969,976,1031,1060,1091,1269,1271-1278
+src/scenes/city/mod.rs
+  h_4b7d6207874de7 196,280-285,298,651,660,696,738,830
+src/scenes/city/vehicles.rs
+  h_4b7d6207874de7 21
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "86228628126aa52786bb9b5c4b44e940b8d8ff5d",
+  "prompts": {},
+  "humans": {
+    "h_4b7d6207874de7": {
+      "author": "Itz-Agasta <rupamgolui69@gmail.com>"
+    }
+  }
+}
