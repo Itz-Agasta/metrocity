@@ -1,0 +1,14 @@
+src/scenes/cafe/components/signboard.rs
+  h_4b7d6207874de7 1-82
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "76b80ebfc461755782d8ebf839caf9a3ac9825fc",
+  "prompts": {},
+  "humans": {
+    "h_4b7d6207874de7": {
+      "author": "Itz-Agasta <rupamgolui69@gmail.com>"
+    }
+  }
+}
