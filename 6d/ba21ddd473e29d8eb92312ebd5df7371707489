@@ -1,0 +1,43 @@
+src/scenes/harbor/paint.rs
+  s_addb31f9c3aecc::t_90f3ae21a55a00 26-33
+src/scenes/harbor/layout.rs
+  s_addb31f9c3aecc::t_90f3ae21a55a00 15-17,33
+  s_addb31f9c3aecc::t_2308a8e2dfeff4 34
+src/scenes/harbor/background.rs
+  s_addb31f9c3aecc::t_0489a47d15109d 29-56,76-77,87,97,99,108,146-148,164-167,169
+  s_addb31f9c3aecc::t_2308a8e2dfeff4 168
+src/scenes/harbor/components/mod.rs
+  s_addb31f9c3aecc::t_90f3ae21a55a00 1
+README.md
+  s_addb31f9c3aecc::t_ab00e743789d17 46
+src/scenes/harbor/components/lighthouse.rs
+  s_addb31f9c3aecc::t_a59c68ae75be35 67-74,86-92
+  s_addb31f9c3aecc::t_dbc4de77dae086 10,22-28,62-63,66,75-76,84-85,93
+  s_addb31f9c3aecc::t_0489a47d15109d 101-105
+  s_addb31f9c3aecc::t_90f3ae21a55a00 1-9,11-21,29-32,34,40-50,61,94-100,106-145
+  s_addb31f9c3aecc::t_2308a8e2dfeff4 33,35-39
+  s_addb31f9c3aecc::t_400400a1bd34bc 51-60,64-65,77-83
+src/scenes/harbor/palette.rs
+  s_addb31f9c3aecc::t_dbc4de77dae086 34-35
+  s_addb31f9c3aecc::t_90f3ae21a55a00 31-33,36-40
+src/scenes/harbor/mod.rs
+  s_addb31f9c3aecc::t_0489a47d15109d 3-4,12,40,51,80,84
+src/scenes/harbor/components/water.rs
+  s_addb31f9c3aecc::t_0489a47d15109d 8,12,37-39,43,45-46
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6dba21ddd473e29d8eb92312ebd5df7371707489",
+  "prompts": {},
+  "sessions": {
+    "s_addb31f9c3aecc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4418c700-5ff2-4e08-afcb-bde78bb8285e",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Itz-Agasta <rupamgolui69@gmail.com>"
+    }
+  }
+}
