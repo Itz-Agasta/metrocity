@@ -1,0 +1,16 @@
+aur/.SRCINFO
+  h_4b7d6207874de7 3,7,11-12
+aur/PKGBUILD
+  h_4b7d6207874de7 3,6,11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1e7b469d3decf4774d64d79b33f561d607f71492",
+  "prompts": {},
+  "humans": {
+    "h_4b7d6207874de7": {
+      "author": "Itz-Agasta <rupamgolui69@gmail.com>"
+    }
+  }
+}
