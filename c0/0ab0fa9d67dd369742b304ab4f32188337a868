@@ -1,0 +1,18 @@
+src/scenes/sakura/background.rs
+  h_4b7d6207874de7 53-56,58-96,98-105
+src/scenes/sakura/components/lake.rs
+  h_4b7d6207874de7 23,26-28,30-41,44-46,50,57-59,61,65-81,87-88,93-95,98-105,109,112,114
+src/scenes/sakura/paint.rs
+  h_4b7d6207874de7 15-24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c00ab0fa9d67dd369742b304ab4f32188337a868",
+  "prompts": {},
+  "humans": {
+    "h_4b7d6207874de7": {
+      "author": "Itz-Agasta <rupamgolui69@gmail.com>"
+    }
+  }
+}
