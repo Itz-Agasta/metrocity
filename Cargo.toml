@@ -10,6 +10,7 @@ homepage = "https://github.com/Itz-Agasta/metrocity"
 readme = "README.md"
 keywords = ["screensaver", "terminal", "tui", "ratatui", "cli"]
 categories = ["command-line-utilities"]
+exclude = ["docs/"]
 
 [[bin]]
 name = "metrocity"

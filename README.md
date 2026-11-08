@@ -18,7 +18,15 @@
   <img alt="Binary size" src="https://img.shields.io/badge/binary-~1.4MB-green">
 </p>
 
-https://github.com/user-attachments/assets/e3bf0c0c-ef1e-4b0d-b89d-a4db6d16ea74
+<p align="center">
+  <img alt="Metrocity cycling through its cafe, sakura, city, meadow and harbor scenes" src="docs/media/demo.webp" width="880">
+</p>
+
+<p align="center">
+  <code>paru -S metrocity</code> &nbsp;·&nbsp; <code>cargo install metrocity</code>
+  <br>
+  <sub>Pixel sprites need a Kitty-graphics terminal: kitty, WezTerm or Ghostty</sub>
+</p>
 
 Metrocity activates when your shell has been idle, takes over the terminal with a randomly picked animated scene (a cyberpunk city skyline, a cozy cat cafe, a sunny meadow, a moonlit sakura lakeside, or a night harbor with a passing train), and exits instantly on any keypress - like a screensaver, but for your terminal. Flashes your distro logo. Goes hard in your Hyprland setup.
 
@@ -37,13 +45,13 @@ Built with [Rust](https://www.rust-lang.org/), [Ratatui](https://ratatui.rs/), [
 
 ## Scenes
 
-| Scene  | Description |
-|--------|-------------|
-| `city` | Cyberpunk skyline: neon buildings, flying traffic, rain, your distro logo - ported from [metropolis](https://github.com/5c0/metropolis) |
-| `cafe` | Cozy cat cafe: two animated pixel cats, neon sign, rain on the window, pastries |
-| `meadow` | Meadow: a capybara, a sloth and a honey badger lounging under a big tree, with a beehive, bees, swaying sunflowers, drifting leaves and a pot of hunny. Designed by [@sean-d](https://github.com/sean-d). |
-| `sakura` | Moonlit lakeside: a cherry tree shedding petals over the water, a city skyline and pagoda on the far shore, and a pixel fox that gazes at the moon, strolls the bank and naps between two glowing stone lanterns |
-| `harbor` | Night harbor: a skyline whose windows switch on and off, a pixel moon in a different phase each night, a train crossing an elevated line, a lighthouse sweeping its beam, and the whole city mirrored in the rippling water |
+| Scene  | Preview | Description |
+|--------|---------|-------------|
+| `city` | <img src="docs/media/city.webp" width="240" alt="city scene"> | Cyberpunk skyline: neon buildings, flying traffic, rain, your distro logo - ported from [metropolis](https://github.com/5c0/metropolis) |
+| `cafe` | <img src="docs/media/cafe.webp" width="240" alt="cafe scene"> | Cozy cat cafe: two animated pixel cats, neon sign, rain on the window, pastries |
+| `meadow` | <img src="docs/media/meadow.webp" width="240" alt="meadow scene"> | Meadow: a capybara, a sloth and a honey badger lounging under a big tree, with a beehive, bees, swaying sunflowers, drifting leaves and a pot of hunny. Designed by [@sean-d](https://github.com/sean-d). |
+| `sakura` | <img src="docs/media/sakura.webp" width="240" alt="sakura scene"> | Moonlit lakeside: a cherry tree shedding petals over the water, a city skyline and pagoda on the far shore, and a pixel fox that gazes at the moon, strolls the bank and naps between two glowing stone lanterns |
+| `harbor` | <img src="docs/media/harbor.webp" width="240" alt="harbor scene"> | Night harbor: a skyline whose windows switch on and off, a pixel moon in a different phase each night, a train crossing an elevated line, a lighthouse sweeping its beam, and the whole city mirrored in the rippling water |
 
 The cafe, meadow and sakura scenes layer pixel-art sprites on top of the character grid. Sprites need a terminal that supports the Kitty graphics protocol - kitty, WezTerm, or Ghostty. On other terminals the scene still renders, just without the sprites.
 
@@ -78,7 +86,7 @@ Add to your `~/.zshrc`:
 
 ```bash
 export METROCITY_TIMEOUT=120  # seconds of idle before activation (default: 120)
-export METROCITY_SCENE=cafe   # optional: pin a scene - cafe, city or meadow (default: random)
+export METROCITY_SCENE=cafe   # optional: pin a scene (default: random)
 eval "$(metrocity shell-init zsh)"
 ```
 
@@ -102,7 +110,7 @@ set -gx METROCITY_SCENE cafe
 metrocity shell-init fish | source
 ```
 
-`METROCITY_SCENE` is optional. If unset, metrocity picks a random scene every time it activates. Set it to pin one: `cafe` for the cat cafe, `city` for the cyberpunk skyline, or `meadow` for the cozy meadow.
+`METROCITY_SCENE` is optional. If unset, metrocity picks a random scene every time it activates. Set it to any scene name to pin one (see [Scenes](#scenes) or run `metrocity list scenes`).
 
 
 > **Add these lines to your shell config file, not just the current terminal.**
@@ -119,7 +127,7 @@ Just run `metrocity` - it takes over the terminal, press any key to exit.
 
 ```
 metrocity                              # Start immediately (random scene)
-metrocity --scene cafe                 # Pin a specific scene (city, cafe, meadow)
+metrocity --scene cafe                 # Pin a specific scene
 metrocity --theme cyberpunk            # Override color theme
 metrocity --weather rain               # Force weather mode (rain, snow, clear)
 metrocity --fps 60                     # Target frame rate
@@ -144,7 +152,7 @@ Config file: `~/.config/metrocity/config.toml`. Generate it with `metrocity conf
 ```toml
 [engine]
 fps = 30
-scene = "random"  # random (default), cafe, city or meadow
+scene = "random"  # random (default) or any name from `metrocity list scenes`
 
 [appearance]
 theme = "default"
