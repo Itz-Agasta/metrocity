@@ -86,7 +86,7 @@ Add to your `~/.zshrc`:
 
 ```bash
 export METROCITY_TIMEOUT=120  # seconds of idle before activation (default: 120)
-export METROCITY_SCENE=cafe   # optional: pin a scene - cafe, city or meadow (default: random)
+export METROCITY_SCENE=cafe   # optional: pin a scene (default: random)
 eval "$(metrocity shell-init zsh)"
 ```
 
@@ -110,7 +110,7 @@ set -gx METROCITY_SCENE cafe
 metrocity shell-init fish | source
 ```
 
-`METROCITY_SCENE` is optional. If unset, metrocity picks a random scene every time it activates. Set it to pin one: `cafe` for the cat cafe, `city` for the cyberpunk skyline, or `meadow` for the cozy meadow.
+`METROCITY_SCENE` is optional. If unset, metrocity picks a random scene every time it activates. Set it to any scene name to pin one (see [Scenes](#scenes) or run `metrocity list scenes`).
 
 
 > **Add these lines to your shell config file, not just the current terminal.**
@@ -127,7 +127,7 @@ Just run `metrocity` - it takes over the terminal, press any key to exit.
 
 ```
 metrocity                              # Start immediately (random scene)
-metrocity --scene cafe                 # Pin a specific scene (city, cafe, meadow)
+metrocity --scene cafe                 # Pin a specific scene
 metrocity --theme cyberpunk            # Override color theme
 metrocity --weather rain               # Force weather mode (rain, snow, clear)
 metrocity --fps 60                     # Target frame rate
@@ -152,7 +152,7 @@ Config file: `~/.config/metrocity/config.toml`. Generate it with `metrocity conf
 ```toml
 [engine]
 fps = 30
-scene = "random"  # random (default), cafe, city or meadow
+scene = "random"  # random (default) or any name from `metrocity list scenes`
 
 [appearance]
 theme = "default"
